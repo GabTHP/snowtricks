@@ -5,10 +5,19 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Faker;
 
 class UserFixtures extends Fixture
 {
+
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager): void
     {
         $username = 'gabriel';
@@ -19,10 +28,10 @@ class UserFixtures extends Fixture
         $role = 'admin';
 
         $user = new User();
-
+        $password = $this->encoder->encodePassword($user, 'azerty');
+        $user->setPassword($password);
         $user->setUsername($username);
         $user->setRoles($roles);
-        $user->setPassword($password);
         $user->setEmail($email);
         $user->setAvatar($avatar);
         $user->setRole($role);
