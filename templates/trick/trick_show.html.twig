@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TrickController!{% endblock %}
+
+{% block body %}
+    <section class="article">
+    <h2>{{ trick.name }}</h2>
+    <p>{{ trick.category }}</p>
+    <p>{{ trick.description }}</p>
+    </section>
+    <section class="Illustrations">
+    <h2> Illustrations </h2>
+        {% for media in medias %}
+            <div>
+            <img src="{{ media.url }}"> 
+            </div>
+        {% endfor %}
+    </section>
+    <section class="discussion">
+    <h2> Espace Discussion </h2>
+        {% for message in messages %}
+            <div>
+            <p> Auteur {{ message.getUser().username }} 
+            <p>{{ message.content }}</p>
+            <p>Créé le {{ message.createdAt | date('d/m/Y')}}</p>
+            <img src="{{ message.getUser().avatar }}"> 
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}
+
