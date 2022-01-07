@@ -6,6 +6,7 @@ use App\Entity\Trick;
 use App\Entity\User;
 use App\Entity\Message;
 use App\Entity\Media;
+use App\Entity\Video;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
@@ -31,7 +32,9 @@ class TrickFixtures extends Fixture
             for ($j = 1; $j <= mt_rand(1, 3); $j++) {
                 $trick = new Trick();
                 $trick->setCategory($faker->word);
-                $trick->setName($faker->country);
+                $name = $faker->country;
+                $trick->setName($name);
+                $trick->setSlug($name);
                 $trick->setDescription($faker->paragraph);
                 $trick->setCreatedAt($faker->dateTime);
                 $trick->setupdatedAt(null);
@@ -44,6 +47,13 @@ class TrickFixtures extends Fixture
                     $media->setUrl("https://fakeimg.pl/250x100/");
                     $media->setTrick($trick);
                     $manager->persist($media);
+                }
+                for ($count = 0; $count < 10; $count++) {
+                    $video = new Video();
+                    $video->setName($faker->word);
+                    $video->setUrl("https://fakeimg.pl/250x100/");
+                    $video->setTrick($trick);
+                    $manager->persist($video);
                 }
             }
 

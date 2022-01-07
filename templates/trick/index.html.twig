@@ -7,7 +7,7 @@
 <section class="article">
     {% for trick in tricks %}
         <article>
-        <p><a href="trick/{{ trick.id }}">{{trick.name }}</a></p>
+        <p><a href="trick/{{ trick.id }}/{{ trick.slug }}">{{trick.name }}</a></p>
         <p>Créé le {{ trick.createdAt | date('d/m/Y')}}</p>
         </article>
     {% endfor %}

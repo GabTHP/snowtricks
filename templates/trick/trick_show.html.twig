@@ -16,6 +16,14 @@
             </div>
         {% endfor %}
     </section>
+     <section class="Videos">
+    <h2> Videos </h2>
+        {% for video in videos %}
+            <div>
+            <img src="{{ video.url }}"> 
+            </div>
+        {% endfor %}
+    </section>
     <section class="discussion">
     <h2> Espace Discussion </h2>
         {% for message in messages %}
@@ -26,6 +34,7 @@
             <img src="{{ message.getUser().avatar }}"> 
             </div>
         {% endfor %}
+        {{ knp_pagination_render(messages) }}
     </section>
 {% endblock %}
 
