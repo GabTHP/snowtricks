@@ -17,6 +17,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Service\FileUploader;
+use App\Form\FileUploadType;
 
 class RegistrationController extends AbstractController
 {
@@ -30,7 +32,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,  FileUploader $file_uploader, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $user->setRoles(array('ROLE_USER'));
@@ -45,6 +47,23 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            $file = $form['upload_file']->getData();
+            if ($file) {
+                $file_name = $file_uploader->upload($file);
+                if (null !== $file_name) // for example
+                {
+                    $directory = $file_uploader->getTargetDirectory();
+                    $full_path = $directory . '/' . $file_name;
+                    // Do what you want with the full path file...
+                    // Why not read the content or parse it !!!
+                } else {
+                    // Oups, an error occured !!!
+                }
+            }
+
+            $user->setAvatar($file_name);
+
 
             $entityManager->persist($user);
             $entityManager->flush();

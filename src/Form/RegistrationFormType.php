@@ -11,6 +11,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class RegistrationFormType extends AbstractType
 {
@@ -19,7 +22,20 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('username')
             ->add('email')
-            ->add('avatar')
+            ->add('upload_file', FileType::class, [
+                'label' => false,
+                'mapped' => false,
+                'required' => true,
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [ // We want to let upload only jpg, jpeg or png files
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => "Veuillez soumettre un fichier de type image (jpg, jpeg ou png)",
+                    ])
+                ],
+            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
