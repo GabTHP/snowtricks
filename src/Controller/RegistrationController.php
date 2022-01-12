@@ -55,8 +55,6 @@ class RegistrationController extends AbstractController
                 {
                     $directory = $file_uploader->getTargetDirectory();
                     $full_path = $directory . '/' . $file_name;
-                    // Do what you want with the full path file...
-                    // Why not read the content or parse it !!!
                 } else {
                     // Oups, an error occured !!!
                 }
@@ -69,15 +67,15 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            //   $this->emailVerifier->sendEmailConfirmation(
-            //       'app_verify_email',
-            //       $user,
-            //       (new TemplatedEmail())
-            //           ->from(new Address('gabriel.bouakira@gmail.com', 'SnowTricks'))
-            //           ->to($user->getEmail())
-            //           ->subject('Please Confirm your Email')
-            //           ->htmlTemplate('registration/confirmation_email.html.twig')
-            //   );
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
+                (new TemplatedEmail())
+                    ->from(new Address('gabriel.bouakira@gmail.com', 'SnowTricks'))
+                    ->to($user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
             // do anything else you need here, like send an email
 
             return $userAuthenticator->authenticateUser(
