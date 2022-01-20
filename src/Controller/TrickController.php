@@ -25,7 +25,6 @@ class TrickController extends AbstractController
         return $this->render(
             'trick/index.html.twig',
             [
-                'controller_name' => 'TrickController',
                 'tricks' => $tricks
             ]
         );
@@ -36,17 +35,17 @@ class TrickController extends AbstractController
      */
     public function getSingleTrick($id, $slug, Request $request, PaginatorInterface $paginator): Response
     {
-        $trick = $this->getDoctrine()->getManager()->getRepository(Trick::class)->findOneBy(array('slug' => $slug));
+        $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('slug' => $slug));
 
         $messages = $this->getDoctrine()->getRepository(Message::class)->findBy(array('trick' => $id), array('createdAt' => 'DESC'));
 
         $messages = $paginator->paginate(
-            $messages,
+            $trick->getMessages(),
             $request->query->getInt('page', 1),
             2
         );
 
-        $medias = $this->getDoctrine()->getRepository(Media::class)->findBy(array('trick' => $id));
+        //$medias = $this->getDoctrine()->getRepository(Media::class)->findBy(array('trick' => $id));
 
         $videos = $this->getDoctrine()->getRepository(Video::class)->findBy(array('trick' => $id));
 
@@ -56,11 +55,10 @@ class TrickController extends AbstractController
         return $this->render(
             'trick/trick_show.html.twig',
             [
-                'controller_name' => 'TrickController',
                 'trick' => $trick,
                 'messages' => $messages,
                 'users' => $users,
-                'medias' => $medias,
+                //'medias' => $medias,
                 'videos' => $videos,
                 'request' => $request
             ]

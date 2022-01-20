@@ -45,7 +45,7 @@ class Trick
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Media::class, mappedBy="trickId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Media::class, mappedBy="trick", orphanRemoval=true)
      */
     private $medias;
 
@@ -154,7 +154,7 @@ class Trick
     {
         if (!$this->medias->contains($media)) {
             $this->medias[] = $media;
-            $media->setTrickId($this);
+            $media->setTrick($this);
         }
 
         return $this;
@@ -164,8 +164,8 @@ class Trick
     {
         if ($this->medias->removeElement($media)) {
             // set the owning side to null (unless already changed)
-            if ($media->getTrickId() === $this) {
-                $media->setTrickId(null);
+            if ($media->getTrick() === $this) {
+                $media->setTrick(null);
             }
         }
 

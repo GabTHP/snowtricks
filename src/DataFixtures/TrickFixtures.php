@@ -25,7 +25,6 @@ class TrickFixtures extends Fixture
             $user->setPassword('azerty');
             $user->setEmail($faker->email);
             $user->setAvatar('https://i.pravatar.cc/300');
-            $user->setRole('user');
             $manager->persist($user);
 
 
