@@ -47,9 +47,9 @@ class TrickController extends AbstractController
 
         //$medias = $this->getDoctrine()->getRepository(Media::class)->findBy(array('trick' => $id));
 
-        $videos = $this->getDoctrine()->getRepository(Video::class)->findBy(array('trick' => $id));
+        //$videos = $this->getDoctrine()->getRepository(Video::class)->findBy(array('trick' => $id));
 
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        //$users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
 
         return $this->render(
@@ -57,9 +57,9 @@ class TrickController extends AbstractController
             [
                 'trick' => $trick,
                 'messages' => $messages,
-                'users' => $users,
+                //'users' => $users,
                 //'medias' => $medias,
-                'videos' => $videos,
+                //'videos' => $videos,
                 'request' => $request
             ]
         );
