@@ -33,10 +33,7 @@ class TrickFixtures extends Fixture
                 $trick->setCategory($faker->word);
                 $name = $faker->country;
                 $trick->setName($name);
-                $trick->setSlug($name);
                 $trick->setDescription($faker->paragraph);
-                $trick->setCreatedAt($faker->dateTime);
-                $trick->setupdatedAt(null);
                 $trick->setUser($user);
                 $manager->persist($trick);
 

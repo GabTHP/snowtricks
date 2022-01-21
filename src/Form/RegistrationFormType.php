@@ -31,6 +31,7 @@ class RegistrationFormType extends AbstractType
                         'mimeTypes' => [ // We want to let upload only jpg, jpeg or png files
                             'image/jpeg',
                             'image/png',
+                            'image/jpg',
                         ],
                         'mimeTypesMessage' => "Veuillez soumettre un fichier de type image (jpg, jpeg ou png)",
                     ])

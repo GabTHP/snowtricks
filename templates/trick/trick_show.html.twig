@@ -26,6 +26,11 @@
     </section>
     <section class="discussion">
     <h2> Espace Discussion </h2>
+    <h3> Ajouter un Message </h3>
+
+    {{ form(newMessageForm)}}
+
+    <hr>
         {% for message in messages %}
             <div>
             <p> Auteur {{ message.getUser().username }} 
