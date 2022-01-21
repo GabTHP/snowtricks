@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+
 use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=MessageRepository::class)
@@ -18,6 +20,7 @@ class Message
     private $id;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="date")
      */
     private $createdAt;
@@ -47,13 +50,6 @@ class Message
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     public function getContent(): ?string

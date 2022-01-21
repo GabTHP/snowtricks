@@ -86,6 +86,57 @@ class TrickController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/edit-trick/{id}", name="edit_trick")
+     */
+    public function editTrick(Trick $trick, Request $request,  FileUploader $file_uploader)
+    {
+
+        $form = $this->createForm(FormTrickType::class, $trick);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form['upload_file']->getData();
+            if ($file) {
+                $file_name = $file_uploader->upload($file);
+                $original_file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                if (null !== $file_name) // for example
+                {
+                    $directory = $file_uploader->getTargetDirectory();
+                    $full_path = $directory . '/' . $file_name;
+                } else {
+                    // Oups, an error occured !!!
+                }
+            }
+            $media = new Media();
+            $media->setName($original_file_name);
+            $media->setUrl($file_name);
+            $media->setTrick($trick);
+
+            $video = new Video();
+            $video_name = $form->get("video_name")->getData();
+            $video_url = $form->get("video_url")->getData();
+            $video->setName($video_name);
+            $video->setUrl($video_url);
+            $video->setTrick($trick);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($trick);
+            $em->persist($media);
+            $em->persist($video);
+            $em->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('/trick/new-trick.html.twig', [
+            'newTrickForm' => $form->createView()
+        ]);
+    }
+
+
 
     /**
      * @Route("/trick/{id}/{slug}", name="trick_show")
@@ -104,8 +155,6 @@ class TrickController extends AbstractController
 
         $message = new Message;
 
-        $user = $this->getUser();
-        $trick->setUser($user);
 
         $form = $this->createForm(FormMessageType::class, $message);
 
@@ -114,6 +163,9 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+            $user = $this->getUser();
+            $message->setUser($user);
+            $message->SetTrick($trick);
             $em->persist($message);
             $em->flush();
 

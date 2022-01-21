@@ -3,14 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Trick;
-use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class FormTrickType extends AbstractType
 {
@@ -38,5 +37,12 @@ class FormTrickType extends AbstractType
             ->add('video_name', TextType::class, ['mapped' => false])
             ->add('video_url', TextType::class, ['mapped' => false])
             ->add('Valider', SubmitType::class);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Trick::class,
+        ]);
     }
 }
