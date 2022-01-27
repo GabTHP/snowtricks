@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h2> Modifier le Trick </h2>
+    {{ form(newTrickForm)}}
+    <p>Illustrations</p>
+    {% for media in trick.medias %}
+        <p>{{ media.name }} {{ media.id }}</p>
+        <p><a href="/edit-trick/delete-media/{{ media.id}}">Supprimer</a></p>
+    {% endfor %}
+    <p>Vidéos</p>
+    {% for video in trick.videos %}
+        <p>{{ video.name }} {{ video.id }}</p>
+        <p><a href="/edit-trick/delete-video/{{ video.id}}">Supprimer</a></p>
+    {% endfor %}
+
+{% endblock %}
