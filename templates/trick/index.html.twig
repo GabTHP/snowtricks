@@ -10,6 +10,7 @@
         <p><a href="trick/{{ trick.id }}/{{ trick.slug }}">{{trick.name }}</a></p>
         <p>Créé le {{ trick.createdAt | date('d/m/Y')}}</p>
         <p><a href="edit-trick/{{ trick.id}}"> Modifier</a></p>
+        <p><a href="delete-trick/{{ trick.id}}"> Supprimer</a></p>
         </article>
     {% endfor %}
 </section>

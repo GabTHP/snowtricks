@@ -70,7 +70,7 @@ class Trick
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="trick")
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="trick", orphanRemoval=true))
      */
     private $videos;
 

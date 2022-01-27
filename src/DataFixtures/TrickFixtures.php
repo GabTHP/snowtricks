@@ -56,7 +56,6 @@ class TrickFixtures extends Fixture
 
             for ($k = 1; $k <= mt_rand(4, 6); $k++) {
                 $message = new Message();
-                $message->setCreatedAt($faker->dateTime);
                 $message->setContent($faker->sentence);
                 $message->setUser($user);
                 $message->setTrick($trick);

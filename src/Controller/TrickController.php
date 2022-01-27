@@ -138,6 +138,51 @@ class TrickController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/delete-trick/{id}", name="delete_trick")
+     */
+    public function removeTrick($id, Trick $trick, Request $request,  FileUploader $file_uploader)
+    {
+        $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('id' => $id));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($trick);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/edit-trick/delete-media/{id}", name="delete_media")
+     */
+    public function removeMedia($id, Media $media)
+    {
+        $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(array('id' => $id));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($media);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/edit-trick/delete-video/{id}", name="delete_video")
+     */
+    public function removeVideo($id, Video $video)
+    {
+        $media = $this->getDoctrine()->getRepository(Video::class)->findOneBy(array('id' => $id));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($video);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('home');
+    }
+
 
 
     /**
