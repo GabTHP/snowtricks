@@ -89,8 +89,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/edit-trick/{id}", name="edit_trick")
      */
-    public function editTrick(Trick $trick, Request $request,  FileUploader $file_uploader)
+    public function editTrick($id, Trick $trick, Request $request,  FileUploader $file_uploader)
     {
+        $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('id' => $id));
 
         $form = $this->createForm(FormTrickType::class, $trick);
 
@@ -131,8 +132,9 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('/trick/new-trick.html.twig', [
-            'newTrickForm' => $form->createView()
+        return $this->render('/trick/edit-trick.html.twig', [
+            'newTrickForm' => $form->createView(),
+            'trick' => $trick,
         ]);
     }
 

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h2> Modifier le Trick </h2>
+    {{ form(newTrickForm)}}
+    {% for media in trick.medias %}
+        <p>{{ media.name }}</p>
+    {% endfor %}
+
+{% endblock %}
