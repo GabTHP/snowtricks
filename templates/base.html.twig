@@ -27,15 +27,15 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse " id="navbarNavDropdown">
-                <ul class="navbar-nav">
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav float-right">
                     <li class="nav-item">
-                    <a class="nav-link float-right" aria-current="page" href="{{ url('home') }}">Home</a>
+                    <a class="nav-link" aria-current="page" href="{{ url('home') }}">Home</a>
                     </li>
-                    <li class="nav-item float-right">
+                    <li class="nav-item">
                     <a class="nav-link" href="{{ url('app_login') }}">sign in</a>
                     </li>
-                    <li class="nav-item float-right">
+                    <li class="nav-item">
                     <a class="nav-link" href="{{ url('app_register') }}">sign up</a>
                     </li>
                 </ul>
@@ -44,4 +44,6 @@
         </nav>
         {% block body %}{% endblock %}
     </body>
+    <script src="https://bootswatch.com/_vendor/jquery/dist/jquery.min.js"></script>
+    <script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </html>

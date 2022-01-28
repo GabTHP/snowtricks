@@ -5,7 +5,7 @@
 		url("/images/snowboard_header.jpg");
 
 	/* Set a specific height */
-	height: 40vw;
+	height: 100vh;
 
 	/* Position and center the image to scale nicely on all screens */
 	background-position: center;
@@ -22,4 +22,10 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: white;
+}
+
+/* navbar */
+.float-right {
+	margin-left: auto;
+	margin-right: 0;
 }
