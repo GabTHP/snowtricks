@@ -1,0 +1,11 @@
+
+{% for trick in tricks %}
+<div class="card m-2">
+    <img class="card-img-top" src="/images/snowboard_header.jpg" alt="Card image cap">
+        <div class="card-body d-flex">
+        <p class="me-auto"><a href="trick/{{ trick.id }}/{{ trick.slug }}">{{trick.name }}</a></p>
+        <p><a href="edit-trick/{{ trick.id}}"> <i class="text-secondary bi bi-pen"></i></a></p>
+        <p><a href="delete-trick/{{ trick.id}}"><i class="text-danger bi bi-trash"></i></a></p>
+        </div>
+    </div>
+{% endfor %}

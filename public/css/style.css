@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Shrikhand&display=swap");
+
 /* The hero image */
 .hero-image {
 	/* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
@@ -5,13 +7,18 @@
 		url("/images/snowboard_header.jpg");
 
 	/* Set a specific height */
-	height: 100vh;
+	height: 90vh;
 
 	/* Position and center the image to scale nicely on all screens */
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	position: relative;
+
+	/*title */
+}
+h1 .style {
+	font-family: "Shrikhand", cursive;
 }
 
 /* Place text in the middle of the image */
@@ -22,10 +29,143 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: white;
+	font-family: "Shrikhand", cursive;
 }
 
 /* navbar */
 .float-right {
 	margin-left: auto;
 	margin-right: 0;
+}
+
+/*arrow go bottom!*/
+
+.arrow-container {
+	width: 100px;
+	height: 100px;
+	margin: 0 auto;
+	position: absolute;
+	bottom: 25px;
+	left: 0;
+	right: 0;
+}
+
+.arrow-1 {
+	width: 100px;
+	height: 100px;
+	background: #00bcd4;
+	opacity: 0.5;
+	border-radius: 50%;
+	position: absolute;
+}
+
+.arrow-2 {
+	width: 60px;
+	height: 60px;
+	background: #00bcd4;
+	border-radius: 50%;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	z-index: 1;
+	display: table;
+}
+
+.arrow-2:before {
+	width: 52px;
+	height: 52px;
+	content: "";
+	border: 2px solid #006064;
+	border-radius: 50%;
+	position: absolute;
+	top: 2px;
+	left: 2px;
+}
+
+.arrow-2 i.fa {
+	font-size: 30px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	color: #006064;
+}
+
+/* Custom Animate.css */
+
+.bottom-right-con {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin: 10px;
+}
+
+.round {
+	position: relative;
+	border: 3px solid #fff;
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+}
+
+span {
+	z-index: 999;
+	height: 3px;
+	margin: 1px;
+	width: 15px;
+	background: #fff;
+	transition: 0.4s ease;
+}
+
+span:first-child {
+	display: block;
+	position: absolute;
+	transform: rotate(45deg);
+	left: 25%;
+	bottom: 35%;
+}
+
+span:nth-child(2) {
+	display: block;
+	position: absolute;
+	transform: rotate(-45deg);
+	left: 45%;
+	bottom: 35%;
+}
+
+span:nth-child(3) {
+	display: block;
+	position: absolute;
+	transform: rotate(45deg);
+	left: 25%;
+	bottom: 54%;
+}
+
+span:nth-child(4) {
+	display: block;
+	position: absolute;
+	transform: rotate(-45deg);
+	left: 45%;
+	bottom: 54%;
+}
+
+.round:hover span:nth-child(1) {
+	transform: rotate(-135deg);
+}
+
+.round:hover span:nth-child(2) {
+	transform: rotate(135deg);
+}
+
+.round:hover span:nth-child(3) {
+	transform: rotate(225deg);
+}
+
+.round:hover span:nth-child(4) {
+	transform: rotate(-225deg);
+}
+
+/* blog article */
+
+.card {
+	width: 20rem;
 }

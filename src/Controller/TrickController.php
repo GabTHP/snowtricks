@@ -9,6 +9,9 @@ use App\Entity\User;
 use App\Entity\Video;
 use App\Form\FormTrickType;
 use App\Form\FormMessageType;
+use App\Repository\MediaRepository;
+use App\Repository\TrickRepository;
+use App\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,9 +24,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(TrickRepository $repo): Response
     {
-        $tricks = $this->getDoctrine()->getRepository(Trick::class)->findAll();
+        $tricks = $repo->findBy([], ['createdAt' => 'DESC'], 5, 0);
 
         return $this->render(
             'trick/index.html.twig',
@@ -31,6 +34,19 @@ class TrickController extends AbstractController
                 'tricks' => $tricks
             ]
         );
+    }
+
+    /**
+     * 
+     * @Route("/{start}", name="loadMoreTricks", requirements={"start": "\d+"})
+     */
+    public function loadMoreTricks(TrickRepository $repo, $start = 5)
+    {
+        $tricks = $repo->findBy([], ['createdAt' => 'DESC'], 5, $start);
+
+        return $this->render('trick/loadMoreTricks.html.twig', [
+            'tricks' => $tricks
+        ]);
     }
 
     /**
@@ -141,9 +157,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/delete-trick/{id}", name="delete_trick")
      */
-    public function removeTrick($id, Trick $trick, Request $request,  FileUploader $file_uploader)
+    public function removeTrick($id, TrickRepository $repo)
     {
-        $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('id' => $id));
+        $trick = $repo->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($trick);
         $em->flush();
@@ -156,9 +172,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/edit-trick/delete-media/{id}", name="delete_media")
      */
-    public function removeMedia($id, Media $media)
+    public function removeMedia($id, MediaRepository $repo)
     {
-        $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(array('id' => $id));
+        $media = $repo->findBy([], ['id' => $id]);
         $em = $this->getDoctrine()->getManager();
         $em->remove($media);
         $em->flush();
@@ -171,9 +187,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/edit-trick/delete-video/{id}", name="delete_video")
      */
-    public function removeVideo($id, Video $video)
+    public function removeVideo($id, VideoRepository $repo)
     {
-        $media = $this->getDoctrine()->getRepository(Video::class)->findOneBy(array('id' => $id));
+        $video =  $repo->findBy([], ['id' => $id]);
         $em = $this->getDoctrine()->getManager();
         $em->remove($video);
         $em->flush();
