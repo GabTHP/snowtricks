@@ -3,8 +3,7 @@
 /* The hero image */
 .hero-image {
 	/* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
-	background-image: linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.198)),
-		url("/images/snowboard_header.jpg");
+	background-image: linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.198)), url("/images/snowboard_header.jpg");
 
 	/* Set a specific height */
 	height: 90vh;
@@ -168,4 +167,174 @@ span:nth-child(4) {
 
 .card {
 	width: 20rem;
+}
+
+/* arrow to top */
+.to-top {
+	color: rgb(39, 39, 39);
+	visibility: hidden;
+	padding-top: 1.8em;
+	position: relative;
+	border-color: rgb(39, 39, 39);
+	text-decoration: none;
+	transition: all 0.3s ease-out;
+	padding-right: 200px;
+}
+
+.fade-in-image {
+	animation: fadeIn 5s;
+	-webkit-animation: fadeIn 5s;
+	-moz-animation: fadeIn 5s;
+	-o-animation: fadeIn 5s;
+	-ms-animation: fadeIn 5s;
+}
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-moz-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-o-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-ms-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+.to-top:before {
+	content: "▲";
+	font-size: 0.9em;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -0.7em;
+	border: solid 0.13em rgb(65, 65, 65);
+	border-radius: 10em;
+	width: 1.4em;
+	height: 1.4em;
+	line-height: 1.3em;
+	border-color: inherit;
+	transition: transform 0.5s ease-in;
+}
+.to-top:hover {
+	color: rgb(34, 34, 34);
+	border-color: rgb(31, 31, 31);
+}
+
+/*hide navbar on mobile device */
+
+@media (min-width: 100px) {
+	#hide-nav {
+		display: none;
+	}
+}
+
+@media (min-width: 100px) {
+	.to-top {
+		display: none;
+	}
+}
+@media (min-width: 500px) {
+	.to-top {
+		display: block;
+	}
+}
+
+@media (min-width: 500px) {
+	#hide-nav {
+		display: block;
+	}
+}
+@media (min-width: 500px) {
+	.navbar-nav {
+		-ms-flex-direction: row;
+		flex-direction: row;
+	}
+	.nav-link {
+		padding-left: 10px;
+	}
+}
+.navbar-nav .nav-link {
+	padding-right: 0.5rem;
+	padding-left: 0.5rem;
+}
+
+/*nav-mobile-bottom*/
+
+ul {
+	list-style: none;
+}
+li {
+	color: #fff;
+}
+aside {
+	border-right: 1px solid #474747;
+	background: #f8f9fa;
+	flex: 1 0 10%;
+	padding-right: 0.5rem;
+	padding-left: 0.5rem;
+	padding-top: 0.5rem;
+	border-style: none;
+	box-shadow: 0 -5px 5px -5px #333;
+}
+.wrapper {
+	display: flex;
+	height: 100%;
+	z-index: 100;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	border-style: none;
+}
+@media (max-width: 500px) {
+	.wrapper {
+		flex-direction: column-reverse;
+	}
+	ul {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+}
+.wrapper_inner {
+	width: 90%;
+	margin: 0px auto;
+}
+
+@media (min-width: 500px) {
+	#nav-mobile-hide {
+		display: none;
+	}
 }

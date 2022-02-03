@@ -34,10 +34,15 @@
     {% endfor %}
     </div>
 </section>
-<div class="text-center">
+<section>
+<div class="text-center p-3">
     <button id="loadMoreTricks" class="btn btn-primary">Load More</button>
 </div>
+<div class="d-flex flex-row-reverse">
+<a href="/#tricks" id="arrow-up" class="to-top"></a>
+</div>
 </section>
+
 
 {% endblock %}
 
@@ -51,13 +56,17 @@
         event.preventDefault();
         click++;
         var start = 5 * click;
+        if (start > 14) { 
+            document.getElementById("arrow-up").classList.add("fade-in-image");
+            document.getElementById("arrow-up").style.visibility = "visible";
+            }
         const url = " {{ url('loadMoreTricks') }}" + start;
         axios.get(url).then(function(response) {
             console.log(response);
             $("#trickList").append(response.data);
-            $("#arrow-up").show();
         });
     }
+    document.getElementById("loadMoreTricks").addEventListener("click", loadMoreTricks);
     document.getElementById("loadMoreTricks").addEventListener("click", loadMoreTricks);
 </script>
 {% endblock %}
