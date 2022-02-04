@@ -373,3 +373,21 @@ aside {
 	height: auto;
 	visibility: visible;
 }
+
+/*avatar*/
+
+.avatar {
+	/* Rounded border */
+	border-radius: 50%;
+	height: 64px;
+	width: 64px;
+}
+
+.avatar-image {
+	/* Rounded border */
+	border-radius: 50%;
+
+	/* Take full size */
+	height: 100%;
+	width: 100%;
+}

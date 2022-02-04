@@ -60,7 +60,7 @@
             document.getElementById("arrow-up").classList.add("fade-in-image");
             document.getElementById("arrow-up").style.visibility = "visible";
             }
-        const url = " {{ url('loadMoreTricks') }}" + start;
+        const url = "/tricks/" + start;
         axios.get(url).then(function(response) {
             console.log(response);
             $("#trickList").append(response.data);

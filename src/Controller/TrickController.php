@@ -10,6 +10,7 @@ use App\Entity\Video;
 use App\Form\FormTrickType;
 use App\Form\FormMessageType;
 use App\Repository\MediaRepository;
+use App\Repository\MessageRepository;
 use App\Repository\TrickRepository;
 use App\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,13 +38,13 @@ class TrickController extends AbstractController
 
     /**
      * 
-     * @Route("/{start}", name="loadMoreTricks", requirements={"start": "\d+"})
+     * @Route("/tricks/{start}", name="loadMoreTricks", requirements={"start": "\d+"})
      */
     public function loadMoreTricks(TrickRepository $repo, $start = 5)
     {
         $tricks = $repo->findBy([], ['createdAt' => 'DESC'], 5, $start);
 
-        return $this->render('trick/loadMoreTricks.html.twig', [
+        return $this->render('trick/load-more-tricks.html.twig', [
             'tricks' => $tricks
         ]);
     }
@@ -203,13 +204,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick/{id}/{slug}", name="trick_show")
      */
-    public function getSingleTrick($id, $slug, Request $request): Response
+    public function getSingleTrick($id, $slug, TrickRepository $repo, MessageRepository $repo2, Request $request): Response
     {
-        $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('slug' => $slug));
-
-
-
-
+        $trick = $repo->findOneBy(array('slug' => $slug));
 
         $message = new Message;
 
@@ -230,13 +227,34 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $messages = $repo2->findBy([], ['createdAt' => 'DESC'], 5, 0);
 
         return $this->render(
             'trick/trick_show.html.twig',
             [
                 'trick' => $trick,
                 'request' => $request,
+                'messages' =>  $messages,
                 'newMessageForm' => $form->createView()
+            ]
+        );
+    }
+
+    /**
+     * 
+     * @Route("/messages/{start}", name="loadMoreMessages", requirements={"start": "\d+"})
+     */
+    public function loadMoreMessages(MessageRepository $repo2, Request $request, $start = 5)
+    {
+
+
+        $messages = $repo2->findBy([], ['createdAt' => 'DESC'], 5, $start);
+
+        return $this->render(
+            'trick/load-more-messages.html.twig',
+            [
+                'request' => $request,
+                'messages' =>  $messages,
             ]
         );
     }

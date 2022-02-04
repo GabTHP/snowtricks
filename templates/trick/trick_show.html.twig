@@ -56,16 +56,49 @@
 
 
 <hr>
-        {% for message in trick.messages %}
-            <div>
-            <p> Auteur {{ message.getUser().username }} 
-            <p>{{ message.content }}</p>
-            <p>Créé le {{ message.createdAt | date('d/m/Y')}}</p>
-            <img src="{{ message.getUser().avatar }}"> 
+    <div  id="messageList" class="d-flex justify-content-center flex-wrap  container-fluid">
+    {% for message in messages %}
+        <div class="container d-flex justify-content-left align-items-center flex-wrap pt-2 pb-2 pl-5 pr-5">
+            <div class="avatar m-2">
+                <img class="avatar-image" src="{{ message.getUser().avatar }}" />
             </div>
+            <div class="border w-75 p-2" style="border-radius:10px">
+            <p style="margin:0;"><strong>{{ message.getUser().username }}</strong></p>
+            <p style="margin:0;">{{ message.content }}</p>
+            <p class="text-muted" style="margin:0;">Posté le {{ message.createdAt | date('d/m/Y')}}</p> 
+            </div>
+        </div>
         {% endfor %}
-    </section>
+    </div>
+
+    
+<section>
+<div class="text-center p-3">
+    <button id="loadMoreMessages" class="btn btn-primary">Load More</button>
+</div>
+<div class="d-flex flex-row-reverse">
+<!--<a href="/#messages" id="arrow-up" class="to-top"></a> -->
+</div>
+</section>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+
+    click = 0;
+    function loadMoreMessages(event) {
+        event.preventDefault();
+        click++;
+        var start = 5 * click;
+        const url = "/messages/" + start;
+        axios.get(url).then(function(response) {
+            console.log(response);
+            $("#messageList").append(response.data);
+        });
+    }
+    document.getElementById("loadMoreMessages").addEventListener("click", loadMoreMessages);
+
     function loadMedia() {
             document.getElementById("media-video").className  = "media-video";
             document.getElementById("button-load").className  = "hidden";
@@ -82,4 +115,5 @@
     }
 </script>
 {% endblock %}
+
 
