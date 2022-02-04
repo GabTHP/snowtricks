@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request; // Nous avons besoin d'accéder à la requête pour obtenir le numéro de page
-use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Paginator
 use App\Service\FileUploader;
 
 class TrickController extends AbstractController
@@ -204,17 +203,13 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick/{id}/{slug}", name="trick_show")
      */
-    public function getSingleTrick($id, $slug, Request $request, PaginatorInterface $paginator): Response
+    public function getSingleTrick($id, $slug, Request $request): Response
     {
         $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('slug' => $slug));
 
-        $messages = $this->getDoctrine()->getRepository(Message::class)->findBy(array('trick' => $id), array('createdAt' => 'DESC'));
 
-        $messages = $paginator->paginate(
-            $trick->getMessages(),
-            $request->query->getInt('page', 1),
-            2
-        );
+
+
 
         $message = new Message;
 
@@ -240,7 +235,6 @@ class TrickController extends AbstractController
             'trick/trick_show.html.twig',
             [
                 'trick' => $trick,
-                'messages' => $messages,
                 'request' => $request,
                 'newMessageForm' => $form->createView()
             ]

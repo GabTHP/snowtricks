@@ -56,7 +56,7 @@
 
 
 <hr>
-        {% for message in messages %}
+        {% for message in trick.messages %}
             <div>
             <p> Auteur {{ message.getUser().username }} 
             <p>{{ message.content }}</p>
@@ -64,7 +64,6 @@
             <img src="{{ message.getUser().avatar }}"> 
             </div>
         {% endfor %}
-        {{ knp_pagination_render(messages) }}
     </section>
 <script>
     function loadMedia() {
