@@ -1,36 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TrickController!{% endblock %}
-
 {% block body %}
-    <section class="article">
-    <h2>{{ trick.name }}</h2>
-    <p>{{ trick.category }}</p>
-    <p>{{ trick.description }}</p>
-    </section>
-    <section class="Illustrations">
-    <h2> Illustrations </h2>
+
+<div class="hero-image-trick">
+    <div class="hero-text">
+        <h1 class="style">{{ trick.name }}</h1>
+    </div>
+</div>
+<div id="button-load" class="text-center p-3">
+    <button onclick="loadMedia()"id="load-media" class="btn btn-primary">See More</button>
+</div>
+<div id='media-video' class='media-video-hide'>
+    <div class="d-flex justify-content-center flex-wrap  container-fluid">
         {% for media in trick.medias %}
-            <div>
-            <img src="{{ media.url }}"> 
-            </div>
+        <div class="card m-2">
+            <img width="auto" height="auto" src="{{ media.url }}" alt="Card image cap">
+        </div>
         {% endfor %}
-    </section>
-     <section class="Videos">
-    <h2> Videos </h2>
         {% for video in trick.videos %}
-            <div>
-            <img src="{{ video.url }}"> 
-            </div>
+        <div class="card m-2">
+            <iframe width="auto" height="auto" src="https://www.youtube.com/embed/tgbNymZ7vqY"> </iframe>
+        </div>
         {% endfor %}
-    </section>
-    <section class="discussion">
-    <h2> Espace Discussion </h2>
-    <h3> Ajouter un Message </h3>
+    </div>
+</div>
+<div id="button-hide"class="hidden">
+    <button onclick="hideMedia();"id="hide-media;" class="btn btn-primary">See Less</button>
+</div>
+    <div class="container">
+        <p> {{ trick.description }} <p>
+    </div>
+<div class="container">
+    <div class="d-flex justify-content-center flex-wrap ">
+        <div>
+        <p style="padding:1rem">Catégorie : {{trick.category}} </p>
+        </div>
+        {% if (trick.createdAt == trick.updatedAt ) %}
+        <p style="padding:1rem">Créé le : {{trick.createdAt  | format_date() }}</p>  
+        {% else %}
+        <p style="padding:1rem"> Créé le : {{ trick.createdAt  | format_date() }}</p>
+        <p style="padding:1rem"> Dernière mise à jour : {{ trick.updatedAt  | format_date() }}</p>             
+        {% endif %}
 
-    {{ form(newMessageForm)}}
+    </div>
+</div>
+<hr>
+<div class="d-flex justify-content-center flex-wrap ">
+{{ form_start(newMessageForm) }}
 
-    <hr>
+    <div style="float:left">{{ form_row(newMessageForm.content)}}</div>
+
+    <div style="padding-left:1rem; float:left; color:white"> <button type="submit" class="rounded btn btn-primary text-white">Leave a comment</button></div>
+{{ form_end(newMessageForm) }}
+</div>
+
+
+<hr>
         {% for message in messages %}
             <div>
             <p> Auteur {{ message.getUser().username }} 
@@ -41,5 +66,21 @@
         {% endfor %}
         {{ knp_pagination_render(messages) }}
     </section>
+<script>
+    function loadMedia() {
+            document.getElementById("media-video").className  = "media-video";
+            document.getElementById("button-load").className  = "hidden";
+            document.getElementById("button-hide").className  = "text-center p-3";
+            
+    }
+        function hideMedia() {
+            window.scrollTo(top)
+            document.getElementById("media-video").className = ('media-video-hide');
+            document.getElementById("button-load").className  = "text-center p-3";
+            document.getElementById("button-hide").className  = "hidden";
+
+            
+    }
+</script>
 {% endblock %}
 

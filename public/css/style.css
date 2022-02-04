@@ -20,6 +20,23 @@ h1 .style {
 	font-family: "Shrikhand", cursive;
 }
 
+/* The hero image */
+.hero-image-trick {
+	/* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+	background-image: linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.198)), url("/images/snowboard_header.jpg");
+
+	/* Set a specific height */
+	height: 40vh;
+
+	/* Position and center the image to scale nicely on all screens */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+
+	/*title */
+}
+
 /* Place text in the middle of the image */
 .hero-text {
 	text-align: center;
@@ -100,30 +117,30 @@ h1 .style {
 
 .round {
 	position: relative;
-	border: 3px solid #fff;
+	border: none;
 	width: 50px;
 	height: 50px;
 	border-radius: 100%;
 }
 
-span {
+.arrow {
 	z-index: 999;
 	height: 3px;
 	margin: 1px;
 	width: 15px;
 	background: #fff;
 	transition: 0.4s ease;
+	transform: rotate(45deg);
 }
 
-span:first-child {
+.arrow:first-child {
 	display: block;
 	position: absolute;
-	transform: rotate(45deg);
 	left: 25%;
 	bottom: 35%;
 }
 
-span:nth-child(2) {
+.arrow:nth-child(2) {
 	display: block;
 	position: absolute;
 	transform: rotate(-45deg);
@@ -131,7 +148,7 @@ span:nth-child(2) {
 	bottom: 35%;
 }
 
-span:nth-child(3) {
+.arrow:nth-child(3) {
 	display: block;
 	position: absolute;
 	transform: rotate(45deg);
@@ -139,28 +156,12 @@ span:nth-child(3) {
 	bottom: 54%;
 }
 
-span:nth-child(4) {
+.arrow:nth-child(4) {
 	display: block;
 	position: absolute;
 	transform: rotate(-45deg);
 	left: 45%;
 	bottom: 54%;
-}
-
-.round:hover span:nth-child(1) {
-	transform: rotate(-135deg);
-}
-
-.round:hover span:nth-child(2) {
-	transform: rotate(135deg);
-}
-
-.round:hover span:nth-child(3) {
-	transform: rotate(225deg);
-}
-
-.round:hover span:nth-child(4) {
-	transform: rotate(-225deg);
 }
 
 /* blog article */
@@ -337,4 +338,38 @@ aside {
 	#nav-mobile-hide {
 		display: none;
 	}
+}
+
+.hidden {
+	visibility: hidden;
+	height: 0px;
+}
+
+@media (min-width: 500px) {
+	#load-media {
+		display: none;
+	}
+}
+@media (min-width: 500px) {
+	#hide-media {
+		display: none;
+	}
+}
+
+@media (max-width: 500px) {
+	.media-video-hide {
+		height: 0px;
+		visibility: hidden;
+	}
+}
+
+@media (min-width: 500px) {
+	.media-video-hide {
+		visibility: visible;
+	}
+}
+
+.media-video {
+	height: auto;
+	visibility: visible;
 }
