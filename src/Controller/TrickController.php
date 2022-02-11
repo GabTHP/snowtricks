@@ -119,6 +119,13 @@ class TrickController extends AbstractController
             if ($file) {
                 $file_name = $file_uploader->upload($file);
                 $original_file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $media = new Media();
+                $media->setName($original_file_name);
+                $media->setUrl($file_name);
+                $media->setTrick($trick);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($media);
+
                 if (null !== $file_name) // for example
                 {
                     $directory = $file_uploader->getTargetDirectory();
@@ -127,10 +134,7 @@ class TrickController extends AbstractController
                     // Oups, an error occured !!!
                 }
             }
-            $media = new Media();
-            $media->setName($original_file_name);
-            $media->setUrl($file_name);
-            $media->setTrick($trick);
+
 
             $video = new Video();
             $video_name = $form->get("video_name")->getData();
@@ -141,7 +145,6 @@ class TrickController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($trick);
-            $em->persist($media);
             $em->persist($video);
             $em->flush();
 
@@ -172,9 +175,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/edit-trick/delete-media/{id}", name="delete_media")
      */
-    public function removeMedia($id, MediaRepository $repo)
+    public function removeMedia($id, Media $media)
     {
-        $media = $repo->findBy([], ['id' => $id]);
+        $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(array('id' => $id));
         $em = $this->getDoctrine()->getManager();
         $em->remove($media);
         $em->flush();
@@ -187,9 +190,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/edit-trick/delete-video/{id}", name="delete_video")
      */
-    public function removeVideo($id, VideoRepository $repo)
+    public function removeVideo($id, Video $video)
     {
-        $video =  $repo->findBy([], ['id' => $id]);
+        $video = $this->getDoctrine()->getRepository(Video::class)->findOneBy(array('id' => $id));
         $em = $this->getDoctrine()->getManager();
         $em->remove($video);
         $em->flush();

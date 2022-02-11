@@ -2,7 +2,26 @@
 
 {% block body %}
 
-<h2> Ajouter un Trick </h2>
-    {{ form(newTrickForm)}}
+
+    <div class="authentification_background">
+        <section class="container">
+            <div class="form-group">
+                <div class="form-class">
+                    <div class="m-4 m-4">
+                        <p class="pt-3 text-center form-title"><strong>Ajouter un nouveau Trick</strong></p>
+                            {{ form_start(newTrickForm) }}
+                            <div>{{ form_row(newTrickForm.name)}}</div><br>
+                            <div>{{ form_row(newTrickForm.description)}}</div><br>
+                            <div>{{ form_row(newTrickForm.category)}}</div><br>
+                            <h2> Ajouter une illlustration :</h2>
+                            <div>{{ form_row(newTrickForm.upload_file)}}</div><br>
+                            <h2> Ajouter une video :</h2>
+                            <div>{{ form_row(newTrickForm.video_url)}}</div><br>
+                            {{ form_end(newTrickForm) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
 {% endblock %}
