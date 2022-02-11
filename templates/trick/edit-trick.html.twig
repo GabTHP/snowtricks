@@ -2,17 +2,93 @@
 
 {% block body %}
 
-<h2> Modifier le Trick </h2>
-    {{ form(newTrickForm)}}
-    <p>Illustrations</p>
-    {% for media in trick.medias %}
-        <p>{{ media.name }} {{ media.id }}</p>
-        <p><a href="/edit-trick/delete-media/{{ media.id}}">Supprimer</a></p>
-    {% endfor %}
-    <p>Vidéos</p>
-    {% for video in trick.videos %}
-        <p>{{ video.name }} {{ video.id }}</p>
-        <p><a href="/edit-trick/delete-video/{{ video.id}}">Supprimer</a></p>
-    {% endfor %}
+<div class="hero-image-trick">
+    <div class="hero-text">
+        <h1 class="style">{{ trick.name }}</h1>
+    </div>
+</div>
+<div id="button-load" class="text-center p-3">
+    <button onclick="loadMedia()"id="load-media" class="btn btn-primary">See More</button>
+</div>
+<div id='media-video' class='media-video-hide'>
+    <div class="d-flex justify-content-center flex-wrap  container-fluid">
+        {% for media in trick.medias %}
+        <div class="card2 m-2" style"border:0px rgba(0,0,0,.0)">
+            <img width="auto" height="auto" src="{{ media.url }}" alt="Card image cap">
+            <p><a href="/edit-trick/delete-media/{{ media.id}}"><i class="text-danger bi bi-trash"></i></a></p>
+        </div><br>
+        {% endfor %}
+        {% for video in trick.videos %}
+        <div class="card2 m-2">
+            <iframe width="auto" height="auto" src="https://www.youtube.com/embed/tgbNymZ7vqY"> </iframe>
+            <p><a href="/edit-trick/delete-video/{{ video.id}}"><i class="text-danger bi bi-trash"></i></a></p>
 
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div id="button-hide"class="hidden">
+    <button onclick="hideMedia();"id="hide-media;" class="btn btn-primary">See Less</button>
+</div>
+    <div class="container">
+        <p> {{ trick.description }} <p>
+    </div>
+<div class="container">
+    <div class="d-flex justify-content-center flex-wrap ">
+        <div>
+        <p style="padding:1rem">Catégorie : {{trick.category}} </p>
+        </div>
+        {% if (trick.createdAt == trick.updatedAt ) %}
+        <p style="padding:1rem">Créé le : {{trick.createdAt  | format_date() }}</p>  
+        {% else %}
+        <p style="padding:1rem"> Créé le : {{ trick.createdAt  | format_date() }}</p>
+        <p style="padding:1rem"> Dernière mise à jour : {{ trick.updatedAt  | format_date() }}</p>             
+        {% endif %}
+
+    </div>
+</div>
+
+    <div class="d-flex justify-content-center flex-wrap  container-fluid">
+        <div class="container d-flex justify-content-left align-items-center flex-wrap pt-2 pb-2 pl-5 pr-5">
+            <div class="form-group">
+                    <div class="m-4 m-4">
+                    <h2> Mettre à jour les informations du Trick :</h2>
+                        {{ form_start(newTrickForm) }}
+                            <div>{{ form_row(newTrickForm.name)}}</div><br>
+                            <div>{{ form_row(newTrickForm.description)}}</div><br>
+                            <div>{{ form_row(newTrickForm.category)}}</div><br>
+                            <h2> Ajouter une illlustration :</h2>
+                            <div>{{ form_row(newTrickForm.upload_file)}}</div><br>
+                            <h2> Ajouter une Vidéo :</h2>
+                            <p> Nom de la vidéo </p>
+                            <div>{{ form_row(newTrickForm.video_name)}}</div><br>
+                            <p>url de la video</p>
+                            <div>{{ form_row(newTrickForm.video_url)}}</div><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container d-flex justify-content-center align-items-center flex-wrap pt-2 pb-2 pl-5 pr-5">
+        {{ form_end(newTrickForm) }}
+        <a href="/delete-trick/{{ trick.id}}"><div class="border-better btn btn-danger">Supprimer</div></a>
+        </div>
+    </div>
+    
+    <script>
+
+    function loadMedia() {
+            document.getElementById("media-video").className  = "media-video";
+            document.getElementById("button-load").className  = "hidden";
+            document.getElementById("button-hide").className  = "text-center p-3";
+            
+    }
+        function hideMedia() {
+            window.scrollTo(top)
+            document.getElementById("media-video").className = ('media-video-hide');
+            document.getElementById("button-load").className  = "text-center p-3";
+            document.getElementById("button-hide").className  = "hidden";
+
+            
+    }
+</script>
 {% endblock %}

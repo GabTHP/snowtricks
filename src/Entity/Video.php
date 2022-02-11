@@ -28,6 +28,7 @@ class Video
     private $name;
 
     /**
+     * 
      * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="videos")
      */
     private $trick;

@@ -9,11 +9,14 @@ use App\Entity\User;
 use App\Entity\Video;
 use App\Form\FormTrickType;
 use App\Form\FormMessageType;
+use App\Repository\MediaRepository;
+use App\Repository\MessageRepository;
+use App\Repository\TrickRepository;
+use App\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request; // Nous avons besoin d'accéder à la requête pour obtenir le numéro de page
-use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Paginator
 use App\Service\FileUploader;
 
 class TrickController extends AbstractController
@@ -21,9 +24,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(TrickRepository $repo): Response
     {
-        $tricks = $this->getDoctrine()->getRepository(Trick::class)->findAll();
+        $tricks = $repo->findBy([], ['createdAt' => 'DESC'], 5, 0);
 
         return $this->render(
             'trick/index.html.twig',
@@ -31,6 +34,19 @@ class TrickController extends AbstractController
                 'tricks' => $tricks
             ]
         );
+    }
+
+    /**
+     * 
+     * @Route("/tricks/{start}", name="loadMoreTricks", requirements={"start": "\d+"})
+     */
+    public function loadMoreTricks(TrickRepository $repo, $start = 5)
+    {
+        $tricks = $repo->findBy([], ['createdAt' => 'DESC'], 5, $start);
+
+        return $this->render('trick/load-more-tricks.html.twig', [
+            'tricks' => $tricks
+        ]);
     }
 
     /**
@@ -103,6 +119,13 @@ class TrickController extends AbstractController
             if ($file) {
                 $file_name = $file_uploader->upload($file);
                 $original_file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $media = new Media();
+                $media->setName($original_file_name);
+                $media->setUrl($file_name);
+                $media->setTrick($trick);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($media);
+
                 if (null !== $file_name) // for example
                 {
                     $directory = $file_uploader->getTargetDirectory();
@@ -111,10 +134,7 @@ class TrickController extends AbstractController
                     // Oups, an error occured !!!
                 }
             }
-            $media = new Media();
-            $media->setName($original_file_name);
-            $media->setUrl($file_name);
-            $media->setTrick($trick);
+
 
             $video = new Video();
             $video_name = $form->get("video_name")->getData();
@@ -125,7 +145,6 @@ class TrickController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($trick);
-            $em->persist($media);
             $em->persist($video);
             $em->flush();
 
@@ -141,9 +160,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/delete-trick/{id}", name="delete_trick")
      */
-    public function removeTrick($id, Trick $trick, Request $request,  FileUploader $file_uploader)
+    public function removeTrick($id, TrickRepository $repo)
     {
-        $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('id' => $id));
+        $trick = $repo->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($trick);
         $em->flush();
@@ -173,7 +192,7 @@ class TrickController extends AbstractController
      */
     public function removeVideo($id, Video $video)
     {
-        $media = $this->getDoctrine()->getRepository(Video::class)->findOneBy(array('id' => $id));
+        $video = $this->getDoctrine()->getRepository(Video::class)->findOneBy(array('id' => $id));
         $em = $this->getDoctrine()->getManager();
         $em->remove($video);
         $em->flush();
@@ -188,17 +207,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick/{id}/{slug}", name="trick_show")
      */
-    public function getSingleTrick($id, $slug, Request $request, PaginatorInterface $paginator): Response
+    public function getSingleTrick($id, $slug, TrickRepository $repo, MessageRepository $repo2, Request $request): Response
     {
-        $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('slug' => $slug));
-
-        $messages = $this->getDoctrine()->getRepository(Message::class)->findBy(array('trick' => $id), array('createdAt' => 'DESC'));
-
-        $messages = $paginator->paginate(
-            $trick->getMessages(),
-            $request->query->getInt('page', 1),
-            2
-        );
+        $trick = $repo->findOneBy(array('slug' => $slug));
 
         $message = new Message;
 
@@ -219,14 +230,34 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $messages = $repo2->findBy([], ['createdAt' => 'DESC'], 5, 0);
 
         return $this->render(
             'trick/trick_show.html.twig',
             [
                 'trick' => $trick,
-                'messages' => $messages,
                 'request' => $request,
+                'messages' =>  $messages,
                 'newMessageForm' => $form->createView()
+            ]
+        );
+    }
+
+    /**
+     * 
+     * @Route("/messages/{start}", name="loadMoreMessages", requirements={"start": "\d+"})
+     */
+    public function loadMoreMessages(MessageRepository $repo2, Request $request, $start = 5)
+    {
+
+
+        $messages = $repo2->findBy([], ['createdAt' => 'DESC'], 5, $start);
+
+        return $this->render(
+            'trick/load-more-messages.html.twig',
+            [
+                'request' => $request,
+                'messages' =>  $messages,
             ]
         );
     }

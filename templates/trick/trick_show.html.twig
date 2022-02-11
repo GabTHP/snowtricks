@@ -1,45 +1,119 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TrickController!{% endblock %}
-
 {% block body %}
-    <section class="article">
-    <h2>{{ trick.name }}</h2>
-    <p>{{ trick.category }}</p>
-    <p>{{ trick.description }}</p>
-    </section>
-    <section class="Illustrations">
-    <h2> Illustrations </h2>
+
+<div class="hero-image-trick">
+    <div class="hero-text">
+        <h1 class="style">{{ trick.name }}</h1>
+    </div>
+</div>
+<div id="button-load" class="text-center p-3">
+    <button onclick="loadMedia()"id="load-media" class="btn btn-primary">See More</button>
+</div>
+<div id='media-video' class='media-video-hide'>
+    <div class="d-flex justify-content-center flex-wrap  container-fluid">
         {% for media in trick.medias %}
-            <div>
-            <img src="{{ media.url }}"> 
-            </div>
+        <div class="card m-2">
+            <img width="auto" height="auto" src="{{ media.url }}" alt="Card image cap">
+        </div>
         {% endfor %}
-    </section>
-     <section class="Videos">
-    <h2> Videos </h2>
         {% for video in trick.videos %}
-            <div>
-            <img src="{{ video.url }}"> 
-            </div>
+        <div class="card m-2">
+            <iframe width="auto" height="auto" src="https://www.youtube.com/embed/tgbNymZ7vqY"> </iframe>
+        </div>
         {% endfor %}
-    </section>
-    <section class="discussion">
-    <h2> Espace Discussion </h2>
-    <h3> Ajouter un Message </h3>
+    </div>
+</div>
+<div id="button-hide"class="hidden">
+    <button onclick="hideMedia();"id="hide-media;" class="btn btn-primary">See Less</button>
+</div>
+    <div class="container">
+        <p> {{ trick.description }} <p>
+    </div>
+<div class="container">
+    <div class="d-flex justify-content-center flex-wrap ">
+        <div>
+        <p style="padding:1rem">Catégorie : {{trick.category}} </p>
+        </div>
+        {% if (trick.createdAt == trick.updatedAt ) %}
+        <p style="padding:1rem">Créé le : {{trick.createdAt  | format_date() }}</p>  
+        {% else %}
+        <p style="padding:1rem"> Créé le : {{ trick.createdAt  | format_date() }}</p>
+        <p style="padding:1rem"> Dernière mise à jour : {{ trick.updatedAt  | format_date() }}</p>             
+        {% endif %}
 
-    {{ form(newMessageForm)}}
+    </div>
+</div>
+<hr>
+<div class="d-flex justify-content-center flex-wrap ">
+{{ form_start(newMessageForm) }}
 
-    <hr>
-        {% for message in messages %}
-            <div>
-            <p> Auteur {{ message.getUser().username }} 
-            <p>{{ message.content }}</p>
-            <p>Créé le {{ message.createdAt | date('d/m/Y')}}</p>
-            <img src="{{ message.getUser().avatar }}"> 
+    <div style="float:left">{{ form_row(newMessageForm.content)}}</div>
+
+    <div style="padding-left:1rem; float:left; color:white"> <button type="submit" class="rounded btn btn-primary text-white">Leave a comment</button></div>
+{{ form_end(newMessageForm) }}
+</div>
+
+
+<hr>
+    <div  id="messageList" class="d-flex justify-content-center flex-wrap  container-fluid">
+    {% for message in messages %}
+        <div class="container d-flex justify-content-left align-items-center flex-wrap pt-2 pb-2 pl-5 pr-5">
+            <div class="avatar m-2">
+                <img class="avatar-image" src="{{ message.getUser().avatar }}" />
             </div>
+            <div class="border w-75 p-2" style="border-radius:10px">
+            <p style="margin:0;"><strong>{{ message.getUser().username }}</strong></p>
+            <p style="margin:0;">{{ message.content }}</p>
+            <p class="text-muted" style="margin:0;">Posté le {{ message.createdAt | date('d/m/Y')}}</p> 
+            </div>
+        </div>
         {% endfor %}
-        {{ knp_pagination_render(messages) }}
-    </section>
+    </div>
+
+    
+<section>
+<div class="text-center p-3">
+    <button id="loadMoreMessages" class="btn btn-primary">Load More</button>
+</div>
+<div class="d-flex flex-row-reverse">
+<!--<a href="/#messages" id="arrow-up" class="to-top"></a> -->
+</div>
+</section>
 {% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+    click = 0;
+    function loadMoreMessages(event) {
+        event.preventDefault();
+        click++;
+        var start = 5 * click;
+        const url = "/messages/" + start;
+        axios.get(url).then(function(response) {
+            console.log(response);
+            $("#messageList").append(response.data);
+        });
+    }
+    document.getElementById("loadMoreMessages").addEventListener("click", loadMoreMessages);
+
+    function loadMedia() {
+            document.getElementById("media-video").className  = "media-video";
+            document.getElementById("button-load").className  = "hidden";
+            document.getElementById("button-hide").className  = "text-center p-3";
+            
+    }
+        function hideMedia() {
+            window.scrollTo(top)
+            document.getElementById("media-video").className = ('media-video-hide');
+            document.getElementById("button-load").className  = "text-center p-3";
+            document.getElementById("button-hide").className  = "hidden";
+
+            
+    }
+</script>
+{% endblock %}
+
 
