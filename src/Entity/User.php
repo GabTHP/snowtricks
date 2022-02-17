@@ -64,6 +64,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $valid;
+
     public function __construct()
     {
         $this->message = new ArrayCollection();
@@ -248,6 +258,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getValid(): ?bool
+    {
+        return $this->valid;
+    }
+
+    public function setValid(?bool $valid): self
+    {
+        $this->valid = $valid;
 
         return $this;
     }

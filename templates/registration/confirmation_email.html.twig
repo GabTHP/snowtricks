@@ -1,9 +1,8 @@
-<h1>Bonjour! Bienvenue sur SnowTricks, la référence pour les amateurs de poudreuse ! </h1>
+<h1>Bienvenue sur SnowTricks, la référence pour les amateurs de poudreuse ! </h1>
 
 <p>
     Merci de confirmer votre compte en cliquant sur le lien ci-dessous: <br><br>
-    <a href="{{ signedUrl }}">Confirmer mon mail</a>.
-    Attention, le lien ne sera plus utilisable dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+    <a href="{{ url('confirm', {username : user.username , token: user.token}) }}">Confirmer mon mail</a>.
 </p>
 
 <p>

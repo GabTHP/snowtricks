@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "39ef9cfbe6bbdfabd5112508551c3cea",
+    "content-hash": "57c860573519532b10e747078f5a6466",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -4547,16 +4547,16 @@
         },
         {
             "name": "symfony/mailer",
-            "version": "v5.4.0",
+            "version": "v5.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mailer.git",
-                "reference": "2823212575ed3a6adfc5bc34ebb47b5395285048"
+                "reference": "391a2ac6bf8ab298caa7b63826edc9500412ed16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailer/zipball/2823212575ed3a6adfc5bc34ebb47b5395285048",
-                "reference": "2823212575ed3a6adfc5bc34ebb47b5395285048",
+                "url": "https://api.github.com/repos/symfony/mailer/zipball/391a2ac6bf8ab298caa7b63826edc9500412ed16",
+                "reference": "391a2ac6bf8ab298caa7b63826edc9500412ed16",
                 "shasum": ""
             },
             "require": {
@@ -4603,7 +4603,7 @@
             "description": "Helps sending emails",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/mailer/tree/v5.4.0"
+                "source": "https://github.com/symfony/mailer/tree/v5.4.3"
             },
             "funding": [
                 {
@@ -4619,7 +4619,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-23T10:19:22+00:00"
+            "time": "2022-01-02T09:53:40+00:00"
         },
         {
             "name": "symfony/mime",
@@ -7807,55 +7807,6 @@
                 }
             ],
             "time": "2021-11-28T15:25:38+00:00"
-        },
-        {
-            "name": "symfonycasts/verify-email-bundle",
-            "version": "v1.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SymfonyCasts/verify-email-bundle.git",
-                "reference": "7b17b150c39d115141cb462862baac9c281a3de9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SymfonyCasts/verify-email-bundle/zipball/7b17b150c39d115141cb462862baac9c281a3de9",
-                "reference": "7b17b150c39d115141cb462862baac9c281a3de9",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/config": "^4.4 | ^5.0 | ^6.0",
-                "symfony/dependency-injection": "^4.4 | ^5.0 | ^6.0",
-                "symfony/deprecation-contracts": "^2.2 | ^3.0",
-                "symfony/http-kernel": "^4.4 | ^5.0 | ^6.0",
-                "symfony/routing": "^4.4 | ^5.0 | ^6.0"
-            },
-            "conflict": {
-                "symfony/framework-bundle": "<4.4"
-            },
-            "require-dev": {
-                "doctrine/orm": "^2.7",
-                "doctrine/persistence": "^2.0",
-                "symfony/framework-bundle": "^4.4 | ^5.0 | ^6.0",
-                "symfony/phpunit-bridge": "^5.0 | ^6.0",
-                "vimeo/psalm": "^4.3"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "SymfonyCasts\\Bundle\\VerifyEmail\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Simple, stylish Email Verification for Symfony",
-            "support": {
-                "issues": "https://github.com/SymfonyCasts/verify-email-bundle/issues",
-                "source": "https://github.com/SymfonyCasts/verify-email-bundle/tree/v1.7.0"
-            },
-            "time": "2021-11-30T17:26:37+00:00"
         },
         {
             "name": "twig/extra-bundle",
