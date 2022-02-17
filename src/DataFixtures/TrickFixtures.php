@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use App\Entity\Trick;
 use App\Entity\User;
 use App\Entity\Message;
@@ -18,6 +19,30 @@ class TrickFixtures extends Fixture
 
         $faker = Faker\Factory::create('fr_FR');
 
+        $cat1 = new Category();
+        $cat1->setname('Spin');
+        $manager->persist($cat1);
+
+        $cat2 = new Category();
+        $cat2->setname('Straight Airs');
+        $manager->persist($cat2);
+
+        $cat3 = new Category();
+        $cat3->setname('Grab');
+        $manager->persist($cat3);
+
+        $cat4 = new Category();
+        $cat4->setname('Slides');
+        $manager->persist($cat4);
+
+        $cat5 = new Category();
+        $cat5->setname('Stall');
+        $manager->persist($cat5);
+
+        $cat_list = array($cat1, $cat2, $cat3, $cat4, $cat5);
+
+
+
         for ($i = 0; $i < 10; $i++) {
             $user = new User();
             $user->setUsername($faker->userName);
@@ -30,21 +55,21 @@ class TrickFixtures extends Fixture
 
             for ($j = 1; $j <= mt_rand(1, 3); $j++) {
                 $trick = new Trick();
-                $trick->setCategory($faker->word);
                 $name = $faker->country;
                 $trick->setName($name);
                 $trick->setDescription($faker->paragraph);
                 $trick->setUser($user);
+                $trick->setCategory($cat_list[array_rand($cat_list, 1)]);
                 $manager->persist($trick);
 
-                for ($count = 0; $count < 10; $count++) {
+                for ($count = 0; $count < 3; $count++) {
                     $media = new Media();
                     $media->setName($faker->word);
                     $media->setUrl("https://fakeimg.pl/250x100/");
                     $media->setTrick($trick);
                     $manager->persist($media);
                 }
-                for ($count = 0; $count < 10; $count++) {
+                for ($count = 0; $count < 3; $count++) {
                     $video = new Video();
                     $video->setName($faker->word);
                     $video->setUrl("https://fakeimg.pl/250x100/");
