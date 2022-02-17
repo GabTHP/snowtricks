@@ -68,6 +68,13 @@ class TrickController extends AbstractController
             if ($file) {
                 $file_name = $file_uploader->upload($file);
                 $original_file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $media = new Media();
+                $media->setName($original_file_name);
+                $media->setUrl($file_name);
+                $media->setTrick($trick);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($media);
+
                 if (null !== $file_name) // for example
                 {
                     $directory = $file_uploader->getTargetDirectory();
@@ -76,22 +83,19 @@ class TrickController extends AbstractController
                     // Oups, an error occured !!!
                 }
             }
-            $media = new Media();
-            $media->setName($original_file_name);
-            $media->setUrl($file_name);
-            $media->setTrick($trick);
-
-            $video = new Video();
             $video_name = $form->get("video_name")->getData();
             $video_url = $form->get("video_url")->getData();
-            $video->setName($video_name);
-            $video->setUrl($video_url);
-            $video->setTrick($trick);
+            if ($video_name !== null) {
+                $video = new Video();
+                $video->setName($video_name);
+                $video->setUrl($video_url);
+                $video->setTrick($trick);
+                $em->persist($video);
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($trick);
             $em->persist($media);
-            $em->persist($video);
             $em->flush();
 
             return $this->redirectToRoute('home');
