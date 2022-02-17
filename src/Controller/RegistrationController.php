@@ -56,16 +56,26 @@ class RegistrationController extends AbstractController
             }
 
             $user->setAvatar($file_name);
+            $token = $this->generateToken();
+            $user->setToken($token);
+            $user->setValid(False);
 
 
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $token = $user->getToken();
+            $email = $user->getEmail();
+
+
             $email = (new TemplatedEmail())
                 ->from('gabriel.bouakira@gmail.com')
                 ->to($user->getEmail())
-                ->subject('Welcome to the Space Bar!')
-                ->htmlTemplate('registration/confirmation_email.html.twig');
+                ->subject('Bienvenue chez Snow Trick !')
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+                ->context([
+                    'user' => $user
+                ]);
             $mailer->send($email);
 
             // do anything else you need here, like send an email
@@ -80,5 +90,35 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/confirm/{token}/{username}", name="confirm")
+     * @param $token
+     * @param $username
+     * @return Response
+     */
+    public function confirmAccount($token, $username): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->findOneBy(['username' => $username]);
+        $tokenExist = $user->getToken();
+        if ($token === $tokenExist) {
+            $user->setToken(null);
+            $user->setValid(true);
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('app_login');
+        } else {
+            return $this->render('home');
+        }
+    }
+    /**
+     * @return string
+     * @throws \Exception
+     */
+    private function generateToken()
+    {
+        return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
     }
 }
