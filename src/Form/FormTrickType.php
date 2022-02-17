@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Trick;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -19,26 +21,21 @@ class FormTrickType extends AbstractType
     {
         $builder->add(
             'category',
-            ChoiceType::class,
-            array(
-                'choices' => [
-                    'Choice1' => 'Choice1',
-                    'Choice2' => 'Choice2',
-                    'Choice3' => 'Choice3',
-                    'Choice4' => 'Choice4',
-                ],
+            EntityType::class,
+            [
+                'class' => Category::class,
+                'choice_label' => 'name',
                 'label' => false,
                 'attr' => array('class' => 'input-form form-control form-class')
-            )
+            ]
         )
+
             ->add(
                 'name',
                 TextType::class,
                 array(
                     'label' => false,
                     'attr' => array('class' => 'input-form form-control form-class')
-
-
                 )
             )
             ->add(
@@ -67,11 +64,13 @@ class FormTrickType extends AbstractType
             ])
             ->add('video_name', TextType::class, [
                 'mapped' => false,
+                'required' => false,
                 'attr' => array('class' => 'input-form form-control  form-class'),
                 'label' => false,
             ])
             ->add('video_url', TextType::class, [
                 'mapped' => false,
+                'required' => false,
                 'attr' => array('class' => 'input-form form-control  form-class'),
                 'label' => false,
             ])

@@ -135,17 +135,18 @@ class TrickController extends AbstractController
                 }
             }
 
-
-            $video = new Video();
             $video_name = $form->get("video_name")->getData();
             $video_url = $form->get("video_url")->getData();
-            $video->setName($video_name);
-            $video->setUrl($video_url);
-            $video->setTrick($trick);
-
+            if ($video_name !== null) {
+                $video = new Video();
+                $video->setName($video_name);
+                $video->setUrl($video_url);
+                $video->setTrick($trick);
+                $em->persist($video);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($trick);
-            $em->persist($video);
+
             $em->flush();
 
             return $this->redirectToRoute('home');

@@ -36,7 +36,7 @@
 <div class="container">
     <div class="d-flex justify-content-center flex-wrap ">
         <div>
-        <p style="padding:1rem">Catégorie : {{trick.category}} </p>
+        <p style="padding:1rem">Catégorie : {{trick.getCategory().name}} </p>
         </div>
         {% if (trick.createdAt == trick.updatedAt ) %}
         <p style="padding:1rem">Créé le : {{trick.createdAt  | format_date() }}</p>  
