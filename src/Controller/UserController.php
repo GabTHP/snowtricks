@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Form\ResetPassType;
+use App\Entity\User;
+use App\Form\ChangePassType;
 use App\Repository\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -66,7 +69,7 @@ class UserController extends AbstractController
                 ->from('gabriel.bouakira@gmail.com')
                 ->to($user->getEmail())
                 ->subject('SnowTrick - Nouveau not de passe !')
-                ->htmlTemplate('security/new_password_email.html.twig')
+                ->htmlTemplate('security/new_password_email.twig')
                 ->context([
                     'user' => $user
                 ]);
@@ -81,6 +84,42 @@ class UserController extends AbstractController
         return $this->render('security/password-request.twig', [
             'passwordForm' => $form->createView()
         ]);
+    }
+    /**
+     * @Route("/reset-password/{token}/{username}", name="reset_password")
+     * @param $token
+     * @param $username
+     * @return Response
+     */
+    public function confirmAccount(UserPasswordHasherInterface $userPasswordHasher, Request $request, $token, $username): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->findOneBy(['username' => $username]);
+        $tokenExist = $user->getToken();
+        if ($token === $tokenExist) {
+            $form = $this->createForm(ChangePassType::class);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                // encode the plain password
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('password')->getData()
+                    )
+                );
+                $user->setToken(null);
+                $em->persist($user);
+                $em->flush();
+
+                return $this->redirectToRoute('app_login');
+            }
+
+            return $this->render('security/password_change.twig', [
+                'passwordForm' => $form->createView()
+            ]);
+        } else {
+            return $this->render('home');
+        }
     }
 
     /**
