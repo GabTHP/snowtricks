@@ -6,6 +6,7 @@
 <form method="post">
     <div class="authentification_background">
         <section class="container">
+            <div class ="d-flex justify-content-center">
             <div class="form-group">
                 <div class="form-class">
                     <div class="m-4 m-4">
@@ -20,24 +21,31 @@
                             {% endfor %}
                         {% endfor %}
                         <p class="pt-3 text-center form-title"><strong>Login</strong></p>
-                        <label for="inputUsername">Pseudo</label>
-                        <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="border-better input-form form-control" input-form autocomplete="username" required autofocus>
+                        <div style="width:90%">
+                        <label for="inputUsername">Pseudo</label>                        
+                        <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="width-input border-better input-form form-control" input-form autocomplete="username" required autofocus>
+                        </div>
+                        <div style="width:90%">
                         <label for="inputPassword">Mot de passe</label>
-                        <input type="password" name="password" id="inputPassword" class="border-better input-morm form-control" autocomplete="current-password" required>
-
+                        <input type="password" name="password" id="inputPassword" class="width-input border-better input-form form-control" autocomplete="current-password" required>
+                        </div>
                         <input type="hidden" name="_csrf_token"
                             value="{{ csrf_token('authenticate') }}"
                         >
+
                         <div class="text-center">
-                        <button class="border-better btn btn-primary" type="submit">
-                            Connexion
-                        </button>
+                            <button class="border-better btn btn-primary" type="submit">
+                                Connexion
+                            </button><br>
+                            <a href="{{ url('app_register') }}" class="only_mobile">Inscription</a><br>
+                            <a href="{{ url('password_request') }}">Mot de passe oublié</a>
                         </div>
                     </div>
                 </div>
-            </div>    
-        </section>
-    </div>
+            </div>
+        </div>    
+    </section>
+</form>
     
 
     {#
