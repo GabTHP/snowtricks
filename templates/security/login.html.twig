@@ -4,21 +4,21 @@
 
 {% block body %}
 <form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
-
     <div class="authentification_background">
         <section class="container">
             <div class="form-group">
                 <div class="form-class">
                     <div class="m-4 m-4">
+                        {% if error %}
+                            <div class="alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="flash-{{ label }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
                         <p class="pt-3 text-center form-title"><strong>Login</strong></p>
                         <label for="inputUsername">Pseudo</label>
                         <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="border-better input-form form-control" input-form autocomplete="username" required autofocus>

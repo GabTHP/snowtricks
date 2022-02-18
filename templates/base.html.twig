@@ -24,17 +24,26 @@
                 <a class="navbar-brand" href="/">
                     <img src="/images/logo_snowtrick.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
                 </a>
-
                 <ul class="navbar-nav float-right">
                     <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ url('home') }}">Home</a>
                     </li>
+                    <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ url('home') }}#tricks">Tricks</a>
+                    </li>
+                    {% if app.user %}
+                    <li class="nav-item">
+                    <a class="nav-link" href="{{ url('app_logout') }}">logout</a>
+                    </li>
+                    {% else %}
                     <li class="nav-item">
                     <a class="nav-link" href="{{ url('app_login') }}">sign in</a>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link" href="{{ url('app_register') }}">sign up</a>
                     </li>
+                    {% endif %}
+                    
                 </ul>
             </div>
         </nav>
@@ -43,8 +52,12 @@
         <aside>
             <ul>
             <li><h2><a href="/"><i style="color:grey" class="bi bi-house-fill"></i></a><h2></li>
-            <li><h2><a href="/signin"><i style="color:grey" class="bi bi-house-fill"></i></a><h2></li>
-            <li><h2><a href="/login"><i style="color:grey" class="bi bi-box-arrow-in-right"></i></a><h2></li>
+            <li><h2><a href="{{ url('home') }}#tricks"><i style="color:grey" class="bi bi-bookmark-fill"></i></a><h2></li>
+            {% if app.user %}
+            <li><h2><a href="{{ url('app_logout') }}"><i style="color:grey" class="bi bi-door-open-fill"></i></a><h2></li>
+            {% else %}
+            <li><h2><a   href="{{ url('app_login') }}"><i style="color:grey" class="bi bi-box-arrow-in-right"></i></a><h2></li>
+            {% endif %}
             </ul>
         </aside>
         </div>

@@ -46,12 +46,16 @@
 </div>
 <hr>
 <div class="d-flex justify-content-center flex-wrap ">
+{% if app.user %}
 {{ form_start(newMessageForm) }}
 
     <div style="float:left">{{ form_row(newMessageForm.content)}}</div>
 
     <div style="padding-left:1rem; float:left; color:white"> <button type="submit" class="rounded btn btn-primary text-white">Leave a comment</button></div>
 {{ form_end(newMessageForm) }}
+{% else %}
+<p>Vous devez être connecté pour participer à la discussion ! <a   href="{{ url('app_login') }}"> Se connecter</a></p>
+{% endif %}
 </div>
 
 
