@@ -15,13 +15,17 @@
         {% for media in trick.medias %}
         <div class="card2 m-2" style"border:0px rgba(0,0,0,.0)">
             <img width="auto" height="auto" src="{{ media.url }}" alt="Card image cap">
-            <p><a href="/edit-trick/delete-media/{{ media.id}}"><i class="text-danger bi bi-trash"></i></a></p>
+            <div class ="d-flex justify-content-end ">
+                <a href="/edit-trick/delete-media/{{ media.id}}"><i class="p-2 m-2 text-danger shadow-sm bi bi-trash bg-white rounded"></i></a>
+            </div>
         </div><br>
         {% endfor %}
         {% for video in trick.videos %}
         <div class="card2 m-2">
             <iframe width="auto" height="auto" src="https://www.youtube.com/embed/tgbNymZ7vqY"> </iframe>
-            <p><a href="/edit-trick/delete-video/{{ video.id}}"><i class="text-danger bi bi-trash"></i></a></p>
+            <div class ="d-flex justify-content-end ">
+                <a href="/edit-trick/delete-video/{{ video.id}}"><i class="p-2 m-2 text-danger shadow-sm bi bi-trash bg-white rounded"></i></a>
+            </div>
 
         </div>
         {% endfor %}
