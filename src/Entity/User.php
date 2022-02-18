@@ -158,7 +158,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
+    }
 
     public function getEmail(): ?string
     {
