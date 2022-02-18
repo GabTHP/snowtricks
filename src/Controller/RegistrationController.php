@@ -82,15 +82,6 @@ class RegistrationController extends AbstractController
                 "Un lien de confirmation a été envoyé sur ta boite mail, clique dessus pour activer ton compte !"
             );
             return $this->redirectToRoute('app_login');
-
-
-            /*      
-                return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
-            */
         }
 
         return $this->render('registration/register.html.twig', [

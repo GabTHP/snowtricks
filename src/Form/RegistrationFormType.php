@@ -26,7 +26,7 @@ class RegistrationFormType extends AbstractType
                 TextType::class,
                 array(
                     'label' => false,
-                    'attr' => array('class' => 'input-form form-control form-class')
+                    'attr' => array('class' => 'input-form form-control form-class width-input')
                 )
             )
             ->add(
@@ -34,13 +34,13 @@ class RegistrationFormType extends AbstractType
                 EmailType::class,
                 array(
                     'label' => false,
-                    'attr' => array('class' => 'input-form form-control form-class')
+                    'attr' => array('class' => 'input-form form-control form-class width-input')
                 )
             )
             ->add('upload_file', FileType::class, [
                 'label' => false,
                 'mapped' => false,
-                'attr' => array('class' => 'input-form form-control form-class'),
+                'attr' => array('class' => 'input-form form-control form-class width-input'),
                 'required' => true,
                 'constraints' => [
                     new File([
@@ -58,7 +58,7 @@ class RegistrationFormType extends AbstractType
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'label' => false,
-                'attr' => array('class' => 'input-form form-control form-class'),
+                'attr' => array('class' => 'input-form form-control form-class width-input'),
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
