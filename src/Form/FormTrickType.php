@@ -32,6 +32,7 @@ class FormTrickType extends AbstractType
             ->add('mainMedia', FileType::class, [
                 'label' => false,
                 'required' => false,
+                'data_class' => null,
                 'attr' => array('class' => 'input-form form-control  form-class'),
                 'constraints' => [
                     new File([

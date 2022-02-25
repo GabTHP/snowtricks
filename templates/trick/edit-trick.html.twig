@@ -2,8 +2,32 @@
 
 {% block body %}
 
-<div class="hero-image-trick">
-    <div class="hero-text">
+{% if trick.mainMedia %}
+<div class="hero-image-trick" style="background-image: 
+linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.198)), 
+url(/images/avatars/{{ trick.mainMediaUrl }});">
+{% elseif trick.medias | length > 0  %}
+    <div class="hero-image-trick" style="
+background-image: 
+linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.198)),
+url(/images/avatars/{{trick.medias.first.url}});">
+{% else %}
+    <div class="hero-image-trick" style="
+background-image: 
+linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.198)),
+url(/images/snowboard_header.jpg);">
+{% endif %}
+    <div class="d-flex flex-row-reverse">
+        <div class="pt-1 pb-2 pl-2 pr-2 m-3 bg-white border-better" style="border-radius:10px;">
+        {% if trick.mainMedia %}
+        <a href ="/edit-trick/{{trick.id}}/#edit-trick"><i class="p-1 text-secondary bi bi-pen bg-white" style="border-radius:10px;"></i></a>
+        <a href ="/edit-trick/delete-main-media/{{trick.id}}"><i class="p-1 text-danger bi bi-trash bg-white" style="border-radius:10px;"></i></a>
+        {% else %}
+        <a href ="/edit-trick/{{trick.id}}/#edit-trick"><i class="p-1 text-secondary bi bi-pen bg-white" style="border-radius:10px;"></i></a>
+        {% endif %}
+        </div>
+    </div>
+    <div class="hero-text" >        
         <h1 class="style">{{ trick.name }}</h1>
     </div>
 </div>
@@ -14,15 +38,18 @@
     <div class="d-flex justify-content-center flex-wrap  container-fluid">
         {% for media in trick.medias %}
         <div class="card2 m-2" style"border:0px rgba(0,0,0,.0)">
-            <img width="auto" height="auto" src="{{ media.url }}" alt="Card image cap">
-            <div class ="d-flex justify-content-end ">
-                <a href="/edit-trick/delete-media/{{ media.id}}"><i class="p-2 m-2 text-danger shadow-sm bi bi-trash bg-white rounded"></i></a>
+            <img width="auto" height="auto" src="{{ media.url }}" alt="{{ media.name }}">
+            <div class ="d-flex justify-content-center ">
+                <div class="pt-1 pb-2 pl-2 pr-2 m-3 bg-white border-better" style=" border-radius:10px;">
+                    <a href ="/edit-media/{{media.id}}"><i class="p-1 text-secondary bi bi-pen bg-white" style="border-radius:10px;"></i></a>
+                    <a href="/edit-trick/delete-media/{{ media.id}}"><i class="p-1 text-danger bi bi-trash bg-white" style="border-radius:10px;"></i></a>
+                </div>
             </div>
         </div><br>
         {% endfor %}
         {% for video in trick.videos %}
         <div class="card2 m-2">
-            <iframe width="auto" height="auto" src="https://www.youtube.com/embed/tgbNymZ7vqY"> </iframe>
+            <iframe  width="auto" height="auto" src="{{video.url}}"> </iframe>
             <div class ="d-flex justify-content-end ">
                 <a href="/edit-trick/delete-video/{{ video.id}}"><i class="p-2 m-2 text-danger shadow-sm bi bi-trash bg-white rounded"></i></a>
             </div>
@@ -55,12 +82,17 @@
     <div class="d-flex justify-content-center flex-wrap  container-fluid">
         <div class="container d-flex justify-content-left align-items-center flex-wrap pt-2 pb-2 pl-5 pr-5">
             <div class="form-group">
-                    <div class="m-4 m-4">
+                    <div class="m-4 m-4" id="edit-trick">
                     <h2> Mettre à jour les informations du Trick :</h2>
                         {{ form_start(editTrickForm) }}
+                            <div>Nom du Trick :</div>
                             <div>{{ form_row(editTrickForm.name)}}</div><br>
+                            <div>Description :</div>
                             <div>{{ form_row(editTrickForm.description)}}</div><br>
+                            <div>Sélectionner la catégorie du trick :</div>
                             <div>{{ form_row(editTrickForm.category)}}</div><br>
+                            <div>Sélectionner une illustration principal :</div>
+                            <div>{{ form_row(editTrickForm.mainMedia)}}</div><br>
                             <h2> Ajouter une illlustration :</h2>
                             <div>{{ form_row(editTrickForm.upload_file)}}</div><br>
                             <h2> Ajouter une Vidéo :</h2>

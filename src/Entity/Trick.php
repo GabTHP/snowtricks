@@ -79,6 +79,11 @@ class Trick
      */
     private $mainMedia;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mainMediaUrl;
+
     public function __construct()
     {
         $this->medias = new ArrayCollection();
@@ -255,6 +260,18 @@ class Trick
     public function setMainMedia(?string $mainMedia): self
     {
         $this->mainMedia = $mainMedia;
+
+        return $this;
+    }
+
+    public function getMainMediaUrl(): ?string
+    {
+        return $this->mainMediaUrl;
+    }
+
+    public function setMainMediaUrl(?string $mainMediaUrl): self
+    {
+        $this->mainMediaUrl = $mainMediaUrl;
 
         return $this;
     }
