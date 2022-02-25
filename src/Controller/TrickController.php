@@ -58,13 +58,13 @@ class TrickController extends AbstractController
         $user = $this->getUser();
         $trick->setUser($user);
 
-        $form = $this->createForm(FormTrickType::class, $trick);
+        $form_new = $this->createForm(FormTrickType::class, $trick);
 
-        $form->handleRequest($request);
+        $form_new->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form_new->isSubmitted() && $form_new->isValid()) {
 
-            $file = $form['upload_file']->getData();
+            $file = $form_new['upload_file']->getData();
             if ($file) {
                 $file_name = $file_uploader->upload($file);
                 $original_file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -83,8 +83,8 @@ class TrickController extends AbstractController
                     // Oups, an error occured !!!
                 }
             }
-            $video_name = $form->get("video_name")->getData();
-            $video_url = $form->get("video_url")->getData();
+            $video_name = $form_new->get("video_name")->getData();
+            $video_url = $form_new->get("video_url")->getData();
             if ($video_name !== null) {
                 $video = new Video();
                 $video->setName($video_name);
@@ -102,7 +102,7 @@ class TrickController extends AbstractController
         }
 
         return $this->render('/trick/new-trick.html.twig', [
-            'newTrickForm' => $form->createView()
+            'newTrickForm' => $form_new->createView()
         ]);
     }
 
@@ -113,13 +113,13 @@ class TrickController extends AbstractController
     {
         $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('id' => $id));
 
-        $form = $this->createForm(FormTrickType::class, $trick);
+        $form_edit = $this->createForm(FormTrickType::class, $trick);
 
-        $form->handleRequest($request);
+        $form_edit->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form_edit->isSubmitted() && $form_edit->isValid()) {
 
-            $file = $form['upload_file']->getData();
+            $file = $form_edit['upload_file']->getData();
             if ($file) {
                 $file_name = $file_uploader->upload($file);
                 $original_file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -139,8 +139,8 @@ class TrickController extends AbstractController
                 }
             }
 
-            $video_name = $form->get("video_name")->getData();
-            $video_url = $form->get("video_url")->getData();
+            $video_name = $form_edit->get("video_name")->getData();
+            $video_url = $form_edit->get("video_url")->getData();
             if ($video_name !== null) {
                 $video = new Video();
                 $video->setName($video_name);
@@ -157,7 +157,7 @@ class TrickController extends AbstractController
         }
 
         return $this->render('/trick/edit-trick.html.twig', [
-            'newTrickForm' => $form->createView(),
+            'editTrickForm' => $form_edit->createView(),
             'trick' => $trick,
         ]);
     }

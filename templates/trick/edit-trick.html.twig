@@ -57,23 +57,23 @@
             <div class="form-group">
                     <div class="m-4 m-4">
                     <h2> Mettre à jour les informations du Trick :</h2>
-                        {{ form_start(newTrickForm) }}
-                            <div>{{ form_row(newTrickForm.name)}}</div><br>
-                            <div>{{ form_row(newTrickForm.description)}}</div><br>
-                            <div>{{ form_row(newTrickForm.category)}}</div><br>
+                        {{ form_start(editTrickForm) }}
+                            <div>{{ form_row(editTrickForm.name)}}</div><br>
+                            <div>{{ form_row(editTrickForm.description)}}</div><br>
+                            <div>{{ form_row(editTrickForm.category)}}</div><br>
                             <h2> Ajouter une illlustration :</h2>
-                            <div>{{ form_row(newTrickForm.upload_file)}}</div><br>
+                            <div>{{ form_row(editTrickForm.upload_file)}}</div><br>
                             <h2> Ajouter une Vidéo :</h2>
                             <p> Nom de la vidéo </p>
-                            <div>{{ form_row(newTrickForm.video_name)}}</div><br>
+                            <div>{{ form_row(editTrickForm.video_name)}}</div><br>
                             <p>url de la video</p>
-                            <div>{{ form_row(newTrickForm.video_url)}}</div><br>
+                            <div>{{ form_row(editTrickForm.video_url)}}</div><br>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container d-flex justify-content-center align-items-center flex-wrap pt-2 pb-2 pl-5 pr-5">
-        {{ form_end(newTrickForm) }}
+        {{ form_end(editTrickForm) }}
         <a href="/delete-trick/{{ trick.id}}"><div class="border-better btn btn-danger">Supprimer</div></a>
         </div>
     </div>
