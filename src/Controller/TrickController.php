@@ -83,6 +83,20 @@ class TrickController extends AbstractController
                     // Oups, an error occured !!!
                 }
             }
+
+            $file2 = $form_new['mainMedia']->getData();
+            if ($file2) {
+                $file_name = $file_uploader->upload($file2);
+                $original_file_name = pathinfo($file2->getClientOriginalName(), PATHINFO_FILENAME);
+                $trick->setMainMedia($original_file_name);
+                if (null !== $file_name) // for example
+                {
+                    $directory = $file_uploader->getTargetDirectory();
+                    $full_path = $directory . '/' . $file_name;
+                } else {
+                    // Oups, an error occured !!!
+                }
+            }
             $video_name = $form_new->get("video_name")->getData();
             $video_url = $form_new->get("video_url")->getData();
             if ($video_name !== null) {
