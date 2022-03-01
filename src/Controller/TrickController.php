@@ -10,6 +10,7 @@ use App\Entity\Video;
 use App\Form\FormTrickType;
 use App\Form\FormMessageType;
 use App\Form\FormMediaType;
+use App\Form\FormVideoType;
 use App\Repository\MediaRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TrickRepository;
@@ -353,6 +354,37 @@ class TrickController extends AbstractController
         return $this->render('/trick/edit-media.html.twig', [
             'editMediaForm' => $form_edit->createView(),
             'media' => $media,
+        ]);
+    }
+
+    /**
+     * @Route("/edit-video/{id}", name="edit_video")
+     */
+    public function editVideo($id, Video $video, Request $request)
+    {
+        $video = $this->getDoctrine()->getRepository(Video::class)->findOneBy(array('id' => $id));
+
+        $form_edit = $this->createForm(FormVideoType::class);
+
+        $form_edit->handleRequest($request);
+
+        if ($form_edit->isSubmitted() && $form_edit->isValid()) {
+
+            $video_url = $form_edit['video_url']->getData();
+            $video_name = $form_edit['video_name']->getData();
+            $video->setName($video_name);
+            $video->setUrl($video_url);
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($video);
+            $em->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('/trick/edit-video.html.twig', [
+            'editVideoForm' => $form_edit->createView(),
+            'video' => $video,
         ]);
     }
 }

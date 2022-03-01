@@ -49,9 +49,12 @@ url(/images/snowboard_header.jpg);">
         {% endfor %}
         {% for video in trick.videos %}
         <div class="card2 m-2">
-            <iframe  width="auto" height="auto" src="{{video.url}}"> </iframe>
-            <div class ="d-flex justify-content-end ">
-                <a href="/edit-trick/delete-video/{{ video.id}}"><i class="p-2 m-2 text-danger shadow-sm bi bi-trash bg-white rounded"></i></a>
+            <iframe width="auto" height="auto" src="{{ video.url }}"> </iframe>
+            <div class ="d-flex justify-content-center ">
+                <div class="pt-1 pb-2 pl-2 pr-2 m-3 bg-white border-better" style=" border-radius:10px;">
+                    <a href ="/edit-video/{{video.id}}"><i class="p-1 text-secondary bi bi-pen bg-white" style="border-radius:10px;"></i></a>
+                    <a href="/edit-trick/delete-video/{{ video.id}}"><i class="p-1 text-danger bi bi-trash bg-white" style="border-radius:10px;"></i></a>
+                </div>
             </div>
 
         </div>
