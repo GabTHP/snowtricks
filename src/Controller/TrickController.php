@@ -9,6 +9,8 @@ use App\Entity\User;
 use App\Entity\Video;
 use App\Form\FormTrickType;
 use App\Form\FormMessageType;
+use App\Form\FormMediaType;
+use App\Form\FormVideoType;
 use App\Repository\MediaRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TrickRepository;
@@ -83,6 +85,21 @@ class TrickController extends AbstractController
                     // Oups, an error occured !!!
                 }
             }
+
+            $file2 = $form_new['mainMedia']->getData();
+            if ($file2) {
+                $file_name = $file_uploader->upload($file2);
+                $original_file_name = pathinfo($file2->getClientOriginalName(), PATHINFO_FILENAME);
+                $trick->setMainMedia($original_file_name);
+                $trick->setMainMediaUrl($file_name);
+                if (null !== $file_name) // for example
+                {
+                    $directory = $file_uploader->getTargetDirectory();
+                    $full_path = $directory . '/' . $file_name;
+                } else {
+                    // Oups, an error occured !!!
+                }
+            }
             $video_name = $form_new->get("video_name")->getData();
             $video_url = $form_new->get("video_url")->getData();
             if ($video_name !== null) {
@@ -95,7 +112,6 @@ class TrickController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($trick);
-            $em->persist($media);
             $em->flush();
 
             return $this->redirectToRoute('home');
@@ -130,6 +146,20 @@ class TrickController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($media);
 
+                if (null !== $file_name) // for example
+                {
+                    $directory = $file_uploader->getTargetDirectory();
+                    $full_path = $directory . '/' . $file_name;
+                } else {
+                    // Oups, an error occured !!!
+                }
+            }
+            $file2 = $form_edit['mainMedia']->getData();
+            if ($file2) {
+                $file_name = $file_uploader->upload($file2);
+                $original_file_name = pathinfo($file2->getClientOriginalName(), PATHINFO_FILENAME);
+                $trick->setMainMedia($original_file_name);
+                $trick->setMainMediaUrl($file_name);
                 if (null !== $file_name) // for example
                 {
                     $directory = $file_uploader->getTargetDirectory();
@@ -207,6 +237,23 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
+    /**
+     * @Route("/edit-trick/delete-main-media/{id}", name="delete_main_media")
+     */
+    public function removeMainMedia($id, Trick $trick)
+    {
+        $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('id' => $id));
+        $trick->setMainMedia(null);
+        $trick->setMainMediaUrl(null);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($trick);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('home');
+    }
+
 
 
     /**
@@ -265,5 +312,79 @@ class TrickController extends AbstractController
                 'messages' =>  $messages,
             ]
         );
+    }
+
+    /**
+     * @Route("/edit-media/{id}", name="edit_media")
+     */
+    public function editMedia($id, Media $media, Request $request,  FileUploader $file_uploader)
+    {
+        $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(array('id' => $id));
+
+        $form_edit = $this->createForm(FormMediaType::class);
+
+        $form_edit->handleRequest($request);
+
+        if ($form_edit->isSubmitted() && $form_edit->isValid()) {
+
+            $file = $form_edit['media']->getData();
+            if ($file) {
+                $file_name = $file_uploader->upload($file);
+                $original_file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $media->setName($original_file_name);
+                $media->setUrl($file_name);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($media);
+
+                if (null !== $file_name) // for example
+                {
+                    $directory = $file_uploader->getTargetDirectory();
+                    $full_path = $directory . '/' . $file_name;
+                } else {
+                    // Oups, an error occured !!!
+                }
+            }
+
+            $em->persist($media);
+            $em->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('/trick/edit-media.html.twig', [
+            'editMediaForm' => $form_edit->createView(),
+            'media' => $media,
+        ]);
+    }
+
+    /**
+     * @Route("/edit-video/{id}", name="edit_video")
+     */
+    public function editVideo($id, Video $video, Request $request)
+    {
+        $video = $this->getDoctrine()->getRepository(Video::class)->findOneBy(array('id' => $id));
+
+        $form_edit = $this->createForm(FormVideoType::class);
+
+        $form_edit->handleRequest($request);
+
+        if ($form_edit->isSubmitted() && $form_edit->isValid()) {
+
+            $video_url = $form_edit['video_url']->getData();
+            $video_name = $form_edit['video_name']->getData();
+            $video->setName($video_name);
+            $video->setUrl($video_url);
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($video);
+            $em->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('/trick/edit-video.html.twig', [
+            'editVideoForm' => $form_edit->createView(),
+            'video' => $video,
+        ]);
     }
 }

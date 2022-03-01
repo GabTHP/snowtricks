@@ -40,5 +40,6 @@ security:
     - { path: ^/delete-trick/, roles: ROLE_USER }
     - { path: ^/delete-media/, roles: ROLE_USER }
     - { path: ^/delete-video/, roles: ROLE_USER }
+    - { path: ^/delete-main-media/, roles: ROLE_USER }
     - { path: ^/new-trick, roles: ROLE_USER }
     # - { path: ^/profile, roles: ROLE_USER }

@@ -1,11 +1,16 @@
 
 {% for trick in tricks %}
-<div class="card m-2">
-    <img class="card-img-top" src="/images/snowboard_header.jpg" alt="Card image cap">
-        <div class="card-body d-flex">
+<div class="border-better  card m-2">
+    {% if trick.mainMedia %}
+        <img class="card-img-top" src="/images/avatars/{{ trick.mainMediaUrl }}" alt="{{ trick.mainMedia}}" style="border-radius:10px 10px 0 0">
+    {% else %}
+        <img class="card-img-top" src="/images/snowboard_header.jpg" alt="Snowboarder background" style="border-radius:10px 10px 0 0">
+    {% endif %}        <div class="card-body d-flex">
         <p class="me-auto"><a href="trick/{{ trick.id }}/{{ trick.slug }}">{{trick.name }}</a></p>
+        {% if app.user %}
         <p><a href="edit-trick/{{ trick.id}}"> <i class="text-secondary bi bi-pen"></i></a></p>
         <p><a href="delete-trick/{{ trick.id}}"><i class="text-danger bi bi-trash"></i></a></p>
+        {% endif %}
         </div>
     </div>
 {% endfor %}

@@ -29,6 +29,22 @@ class FormTrickType extends AbstractType
                 'attr' => array('class' => 'input-form form-control form-class')
             ]
         )
+            ->add('mainMedia', FileType::class, [
+                'label' => false,
+                'required' => false,
+                'data_class' => null,
+                'attr' => array('class' => 'input-form form-control  form-class'),
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [ // We want to let upload only jpg, jpeg or png files
+                            'image/jpeg',
+                            'image/png',
+                            'image/jpg',
+                        ],
+                        'mimeTypesMessage' => "Veuillez soumettre un fichier de type image (jpg, jpeg ou png)",
+                    ])
+                ],
+            ])
 
             ->add(
                 'name',

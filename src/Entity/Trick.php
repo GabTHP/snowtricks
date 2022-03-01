@@ -74,6 +74,16 @@ class Trick
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mainMedia;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mainMediaUrl;
+
     public function __construct()
     {
         $this->medias = new ArrayCollection();
@@ -238,6 +248,30 @@ class Trick
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getMainMedia(): ?string
+    {
+        return $this->mainMedia;
+    }
+
+    public function setMainMedia(?string $mainMedia): self
+    {
+        $this->mainMedia = $mainMedia;
+
+        return $this;
+    }
+
+    public function getMainMediaUrl(): ?string
+    {
+        return $this->mainMediaUrl;
+    }
+
+    public function setMainMediaUrl(?string $mainMediaUrl): self
+    {
+        $this->mainMediaUrl = $mainMediaUrl;
 
         return $this;
     }

@@ -23,8 +23,6 @@ h1 .style {
 /* The hero image */
 .hero-image-trick {
 	/* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
-	background-image: linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.198)), url("/images/snowboard_header.jpg");
-
 	/* Set a specific height */
 	height: 40vh;
 
@@ -423,7 +421,6 @@ aside {
 	background-color: white;
 	height: auto;
 	height: 10em;
-	width: auto;
 	border-radius: 10px;
 	box-shadow: 0px 0px 10px rgba(32, 32, 32, 0.363);
 }
@@ -432,7 +429,6 @@ aside {
 	background-color: rgb(255, 255, 255);
 	color: black;
 	border-style: none;
-	width: auto;
 }
 
 .width-input {
@@ -450,7 +446,6 @@ aside {
 .authentification_background {
 	background-image: url("/images/snowboard_header.jpg");
 	background-size: cover;
-	height: 100vh;
 	background-position: center;
 }
 
@@ -460,10 +455,8 @@ aside {
 
 .form-group {
 	display: flex;
-	height: 100vh;
 	justify-content: center;
 	align-items: center;
-	max-width: 600px;
 }
 
 .input-form {
