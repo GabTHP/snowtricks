@@ -99,6 +99,7 @@ url(/images/snowboard_header.jpg);">
         </div>
         {% endfor %}
     </div>
+<input type=hidden id="variableAPasser" value={{trick.id}}>
 
     
 <section>
@@ -106,21 +107,21 @@ url(/images/snowboard_header.jpg);">
     <button id="loadMoreMessages" class="btn btn-primary">Load More</button>
 </div>
 <div class="d-flex flex-row-reverse">
-<!--<a href="/#messages" id="arrow-up" class="to-top"></a> -->
 </div>
 </section>
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
+<script type="text/javascript">
 
     click = 0;
     function loadMoreMessages(event) {
         event.preventDefault();
         click++;
         var start = 5 * click;
-        const url = "/messages/" + start;
+        var id =  document.getElementById("variableAPasser").value;
+        const url = "/messages/" + id +"/" + start;
         axios.get(url).then(function(response) {
             console.log(response);
             $("#messageList").append(response.data);

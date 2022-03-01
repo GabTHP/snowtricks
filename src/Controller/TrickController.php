@@ -281,8 +281,8 @@ class TrickController extends AbstractController
 
             return $this->redirectToRoute('home');
         }
-
-        $messages = $repo2->findBy([], ['createdAt' => 'DESC'], 5, 0);
+        $trick = $repo->findOneBy(array('slug' => $slug));
+        $messages = $repo2->findBy(['trick' => $id], ['createdAt' => 'DESC'], 5, 0);
 
         return $this->render(
             'trick/trick_show.html.twig',
@@ -297,13 +297,12 @@ class TrickController extends AbstractController
 
     /**
      * 
-     * @Route("/messages/{start}", name="loadMoreMessages", requirements={"start": "\d+"})
+     * @Route("/messages/{id}/{start}", name="loadMoreMessages", requirements={"start": "\d+"})
      */
-    public function loadMoreMessages(MessageRepository $repo2, Request $request, $start = 5)
+    public function loadMoreMessages($id, MessageRepository $repo2, Request $request, $start = 5)
     {
 
-
-        $messages = $repo2->findBy([], ['createdAt' => 'DESC'], 5, $start);
+        $messages = $repo2->findBy(['trick' => $id], ['createdAt' => 'DESC'], 5, $start);
 
         return $this->render(
             'trick/load-more-messages.html.twig',
