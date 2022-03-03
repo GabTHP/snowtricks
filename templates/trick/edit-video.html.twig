@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div class="authentification_background">
+        <section class="container d-flex justify-content-center">
+            <div class="form-group" style="margin-top:250px; margin-bottom:250px;">
+                <div class="form-class">
+                    <div class="m-4 m-4">
+                        <p class="pt-3 text-center form-title"><strong>Modifier la video</strong></p>
+                            <p> vide actuelle : </p>
+                            <iframe width="auto" height="auto" src="{{video.url}}"> </iframe><br><br>
+                            {{ form_start(editVideoForm) }}
+                            <div>Url youtube de la vidéo :</div>
+                            <div>{{ form_row(editVideoForm.video_url)}}</div><br>
+                            <div>Nom de la vidéo :</div>
+                            <div>{{ form_row(editVideoForm.video_name)}}</div><br>
+                            {{ form_end(editVideoForm) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

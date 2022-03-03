@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+<div class="authentification_background">
+    <section class="container">
+        <div class="d-flex justify-content-center">
+            <div class="form-group" style="padding-top:200px; padding-bottom:200px;">
+                <div class="form-class">
+                    <div class="m-4 m-4">
+                        <p class="pt-3 text-center form-title">Register</p>
+                        {{ form_start(registrationForm) }}
+                            {{ form_start(registrationForm) }}
+                            <label for="inputUsername">Pseudo</label>
+                            <div class="mess" style="width:90%">
+                            {{ form_row(registrationForm.username) }}
+                            </div>
+                            <label for="inputEmail">Email</label>
+                            <div class="mess" style="width:90%">
+                            {{ form_row(registrationForm.email) }}
+                            </div>
+                            <div class="mess" style="width:90%">
+                            <label class="mess" for="inputAvatar">Avatar</label>
+                            {{ form_row(registrationForm.upload_file) }}
+                            </div>
+                            <div class="mess" style="width:90%">
+                            <label for="inputPassword">Mot de passe</label>
+                            {{ form_row(registrationForm.plainPassword) }}
+                            </div>
+                            <div class="text-center">
+                            <button type="submit" class="btn btn-primary border-better">Register</button>
+                            {{ form_end(registrationForm) }}
+                            <br>
+                            <a href="{{ url('app_login') }}" class="only_mobile">J'ai déjà un compte</a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </section>
+</div>
+{% endblock %}

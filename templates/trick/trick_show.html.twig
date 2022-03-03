@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% if trick.mainMedia %}
+<div class="hero-image-trick" style="background-image: 
+linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.198)), 
+url(/images/avatars/{{ trick.mainMediaUrl }});">
+{% elseif trick.medias | length > 0  %}
+    <div class="hero-image-trick" style="
+background-image: 
+linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.198)),
+url(/images/avatars/{{trick.medias.first.url}});">
+{% else %}
+    <div class="hero-image-trick" style="
+background-image: 
+linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.198)),
+url(/images/snowboard_header.jpg);">
+{% endif %}
+    {% if app.user %}
+    <div class="d-flex flex-row-reverse">
+        <div class="pt-1 pb-2 pl-2 pr-2 m-3 bg-white border-better" style="border-radius:10px;">
+        <a href ="/edit-trick/{{trick.id}}/#edit-trick"><i class="p-1 text-secondary bi bi-pen bg-white" style="border-radius:10px;"></i></a>
+        <a href ="/delete-trick/{{trick.id}}"><i class="p-1 text-danger bi bi-trash bg-white" style="border-radius:10px;"></i></a>
+        </div>
+    </div>
+    {% endif %}
+    <div class="hero-text" >        
+        <h1 class="style">{{ trick.name }}</h1>
+    </div>
+</div>
+<div id="button-load" class="text-center p-3">
+    <button onclick="loadMedia()"id="load-media" class="btn btn-primary">See More</button>
+</div>
+<div id='media-video' class='media-video-hide'>
+    <div class="d-flex justify-content-center flex-wrap  container-fluid">
+        {% for media in trick.medias %}
+        <div class="fill">
+            <a href="/images/avatars/{{media.url}}"><img width="auto" height="300" src="/images/avatars/{{media.url}}" alt="{{ media.name }}"></a>
+        </div>
+        {% endfor %}
+        {% for video in trick.videos %}
+        <div class="card m-2">
+            <iframe width="auto" height="300" src="{{video.url}}"> </iframe>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div id="button-hide"class="hidden">
+    <button onclick="hideMedia();"id="hide-media;" class="btn btn-primary">See Less</button>
+</div>
+    <div class="container">
+        <p> {{ trick.description }} <p>
+    </div>
+<div class="container">
+    <div class="d-flex justify-content-center flex-wrap ">
+        <div>
+        <p style="padding:1rem">Catégorie : {{trick.getcategory().name}} </p>
+        </div>
+        {% if (trick.createdAt == trick.updatedAt ) %}
+        <p style="padding:1rem">Créé le : {{trick.createdAt  | format_date() }}</p>  
+        {% else %}
+        <p style="padding:1rem"> Créé le : {{ trick.createdAt  | format_date() }}</p>
+        <p style="padding:1rem"> Dernière mise à jour : {{ trick.updatedAt  | format_date() }}</p>             
+        {% endif %}
+
+    </div>
+</div>
+<hr>
+<div class="d-flex justify-content-center flex-wrap ">
+{% if app.user %}
+{{ form_start(newMessageForm) }}
+
+    <div style="float:left">{{ form_row(newMessageForm.content)}}</div>
+
+    <div style="padding-left:1rem; float:left; color:white"> <button type="submit" class="rounded btn btn-primary text-white">Leave a comment</button></div>
+{{ form_end(newMessageForm) }}
+{% else %}
+<p>Vous devez être connecté pour participer à la discussion ! <a   href="{{ url('app_login') }}"> Se connecter</a></p>
+{% endif %}
+</div>
+
+
+<hr>
+    <div  id="messageList" class="d-flex justify-content-center flex-wrap  container-fluid">
+    {% for message in messages %}
+        <div class="container d-flex justify-content-left align-items-center flex-wrap pt-2 pb-2 pl-5 pr-5">
+            <div class="avatar m-2">
+                <img class="avatar-image" src="/images/avatars/{{ message.getUser().avatar }}" />
+            </div>
+            <div class="border w-75 p-2" style="border-radius:10px">
+            <p style="margin:0;"><strong>{{ message.getUser().username }}</strong></p>
+            <p style="margin:0;">{{ message.content }}</p>
+            <p class="text-muted" style="margin:0;">Posté le {{ message.createdAt | date('d/m/Y')}}</p> 
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+<input type=hidden id="variableAPasser" value={{trick.id}}>
+
+    
+<section>
+{% if messages|length > 5 %}
+<div class="text-center p-3">
+    <button id="loadMoreMessages" class="btn btn-primary">Load More</button>
+</div>
+{% else %}
+{% endif %}
+<div class="d-flex flex-row-reverse">
+</div>
+</section>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+
+    click = 0;
+    function loadMoreMessages(event) {
+        event.preventDefault();
+        click++;
+        var start = 5 * click;
+        var id =  document.getElementById("variableAPasser").value;
+        const url = "/messages/" + id +"/" + start;
+        axios.get(url).then(function(response) {
+            console.log(response);
+            $("#messageList").append(response.data);
+        });
+    }
+    document.getElementById("loadMoreMessages").addEventListener("click", loadMoreMessages);
+
+    function loadMedia() {
+            document.getElementById("media-video").className  = "media-video";
+            document.getElementById("button-load").className  = "hidden";
+            document.getElementById("button-hide").className  = "text-center p-3";
+            
+    }
+        function hideMedia() {
+            window.scrollTo(top)
+            document.getElementById("media-video").className = ('media-video-hide');
+            document.getElementById("button-load").className  = "text-center p-3";
+            document.getElementById("button-hide").className  = "hidden";
+
+            
+    }
+</script>
+{% endblock %}
+
+

@@ -1,0 +1,488 @@
+@import url("https://fonts.googleapis.com/css2?family=Shrikhand&display=swap");
+
+/* The hero image */
+.hero-image {
+	/* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+	background-image: linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.198)), url("/images/snowboard_header.jpg");
+
+	/* Set a specific height */
+	height: 90vh;
+
+	/* Position and center the image to scale nicely on all screens */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+
+	/*title */
+}
+h1 .style {
+	font-family: "Shrikhand", cursive;
+}
+
+/* The hero image */
+.hero-image-trick {
+	/* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+	/* Set a specific height */
+	height: 40vh;
+
+	/* Position and center the image to scale nicely on all screens */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+
+	/*title */
+}
+
+/* Place text in the middle of the image */
+.hero-text {
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	font-family: "Shrikhand", cursive;
+}
+
+/* navbar */
+.float-right {
+	margin-left: auto;
+	margin-right: 0;
+}
+
+/*arrow go bottom!*/
+
+.arrow-container {
+	width: 100px;
+	height: 100px;
+	margin: 0 auto;
+	position: absolute;
+	bottom: 25px;
+	left: 0;
+	right: 0;
+}
+
+.arrow-1 {
+	width: 100px;
+	height: 100px;
+	background: #00bcd4;
+	opacity: 0.5;
+	border-radius: 50%;
+	position: absolute;
+}
+
+.arrow-2 {
+	width: 60px;
+	height: 60px;
+	background: #00bcd4;
+	border-radius: 50%;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	z-index: 1;
+	display: table;
+}
+
+.arrow-2:before {
+	width: 52px;
+	height: 52px;
+	content: "";
+	border: 2px solid #006064;
+	border-radius: 50%;
+	position: absolute;
+	top: 2px;
+	left: 2px;
+}
+
+.arrow-2 i.fa {
+	font-size: 30px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	color: #006064;
+}
+
+/* Custom Animate.css */
+
+.bottom-right-con {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin: 10px;
+}
+
+.round {
+	position: relative;
+	border: none;
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+}
+
+.arrow {
+	z-index: 999;
+	height: 3px;
+	margin: 1px;
+	width: 15px;
+	background: #fff;
+	transition: 0.4s ease;
+	transform: rotate(45deg);
+}
+
+.arrow:first-child {
+	display: block;
+	position: absolute;
+	left: 25%;
+	bottom: 35%;
+}
+
+.arrow:nth-child(2) {
+	display: block;
+	position: absolute;
+	transform: rotate(-45deg);
+	left: 45%;
+	bottom: 35%;
+}
+
+.arrow:nth-child(3) {
+	display: block;
+	position: absolute;
+	transform: rotate(45deg);
+	left: 25%;
+	bottom: 54%;
+}
+
+.arrow:nth-child(4) {
+	display: block;
+	position: absolute;
+	transform: rotate(-45deg);
+	left: 45%;
+	bottom: 54%;
+}
+
+/* blog article */
+
+.card {
+	width: 20rem;
+}
+
+.card2 {
+	width: 20rem;
+	position: relative;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	min-width: 0;
+	word-wrap: break-word;
+	background-color: #fff;
+	background-clip: border-box;
+	border: none;
+	border-radius: 0;
+}
+
+.fill {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+.mess li {
+	color: red;
+}
+.fill img {
+	flex-shrink: 0;
+	min-width: 100%;
+	min-height: 100%;
+}
+
+/* arrow to top */
+.to-top {
+	color: rgb(39, 39, 39);
+	visibility: hidden;
+	padding-top: 1.8em;
+	position: relative;
+	border-color: rgb(39, 39, 39);
+	text-decoration: none;
+	transition: all 0.3s ease-out;
+	padding-right: 200px;
+}
+
+.fade-in-image {
+	animation: fadeIn 5s;
+	-webkit-animation: fadeIn 5s;
+	-moz-animation: fadeIn 5s;
+	-o-animation: fadeIn 5s;
+	-ms-animation: fadeIn 5s;
+}
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-moz-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-o-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-ms-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+.to-top:before {
+	content: "▲";
+	font-size: 0.9em;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -0.7em;
+	border: solid 0.13em rgb(65, 65, 65);
+	border-radius: 10em;
+	width: 1.4em;
+	height: 1.4em;
+	line-height: 1.3em;
+	border-color: inherit;
+	transition: transform 0.5s ease-in;
+}
+.to-top:hover {
+	color: rgb(34, 34, 34);
+	border-color: rgb(31, 31, 31);
+}
+
+/*hide navbar on mobile device */
+
+@media (min-width: 100px) {
+	#hide-nav {
+		display: none;
+	}
+}
+
+@media (min-width: 100px) {
+	.to-top {
+		display: none;
+	}
+}
+@media (min-width: 500px) {
+	.to-top {
+		display: block;
+	}
+}
+
+@media (min-width: 500px) {
+	#hide-nav {
+		display: block;
+	}
+}
+@media (min-width: 500px) {
+	.navbar-nav {
+		-ms-flex-direction: row;
+		flex-direction: row;
+	}
+	.nav-link {
+		padding-left: 10px;
+	}
+}
+.navbar-nav .nav-link {
+	padding-right: 0.5rem;
+	padding-left: 0.5rem;
+}
+
+/*nav-mobile-bottom*/
+
+ul {
+	list-style: none;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+li {
+	color: #fff;
+}
+aside {
+	border-right: 1px solid #474747;
+	background: #f8f9fa;
+	flex: 1 0 10%;
+	padding-right: 0.5rem;
+	padding-left: 0.5rem;
+	padding-top: 0.5rem;
+	border-style: none;
+	box-shadow: 0 -5px 5px -5px #333;
+}
+.wrapper {
+	display: flex;
+	height: 100%;
+	z-index: 100;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	border-style: none;
+}
+@media (max-width: 500px) {
+	.wrapper {
+		flex-direction: column-reverse;
+	}
+	ul {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+}
+.wrapper_inner {
+	width: 90%;
+	margin: 0px auto;
+}
+
+@media (min-width: 500px) {
+	#nav-mobile-hide {
+		display: none;
+	}
+}
+
+.hidden {
+	visibility: hidden;
+	height: 0px;
+}
+
+@media (min-width: 500px) {
+	#load-media {
+		display: none;
+	}
+}
+@media (min-width: 500px) {
+	#hide-media {
+		display: none;
+	}
+}
+
+@media (max-width: 500px) {
+	.media-video-hide {
+		height: 0px;
+		visibility: hidden;
+	}
+}
+
+@media (min-width: 500px) {
+	.media-video-hide {
+		visibility: visible;
+	}
+}
+
+.media-video {
+	height: auto;
+	visibility: visible;
+}
+
+/*avatar*/
+
+.avatar {
+	/* Rounded border */
+	border-radius: 50%;
+	height: 64px;
+	width: 64px;
+}
+
+.avatar-image {
+	/* Rounded border */
+	border-radius: 50%;
+
+	/* Take full size */
+	height: 100%;
+	width: 100%;
+}
+
+/* form input */
+
+.form-class {
+	background-color: white;
+	height: auto;
+	width: 100%;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(32, 32, 32, 0.363);
+}
+
+.form-class-area {
+	background-color: white;
+	height: auto;
+	height: 10em;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(32, 32, 32, 0.363);
+}
+
+.input-form {
+	background-color: rgb(255, 255, 255);
+	color: black;
+	border-style: none;
+}
+
+.width-input {
+	width: 100%;
+}
+
+.border-better {
+	border-radius: 10px;
+	margin: 10px;
+	box-shadow: 0 0 10px #2f2f2f70;
+}
+
+/* authentification */
+
+.authentification_background {
+	background-image: url("/images/snowboard_header.jpg");
+	background-size: cover;
+	background-position: center;
+}
+
+.form-title {
+	font-size: 2.5rem;
+}
+
+.form-group {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.input-form {
+	background-color: rgb(233, 233, 233);
+	color: black;
+	border-style: none;
+}
+
+@media (min-width: 500px) {
+	.only_mobile {
+		visibility: hidden;
+	}
+}

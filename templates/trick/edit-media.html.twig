@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div class="authentification_background">
+        <section class="container d-flex justify-content-center">
+            <div class="form-group" style="padding-top:250px; margin-bottom:250px;">
+                <div class="form-class">
+                    <div class="m-4 m-4">
+                        <p class="pt-3 text-center form-title"><strong>Modifier l'illustration</strong></p>
+                            <p>Image actuelle : </p>
+                            <img src="/images/avatars/{{media.url}}"><br><br>
+                            {{ form_start(editMediaForm) }}
+                            <div>Sélectionner une illustration :</div>
+                            <div class="mess">{{ form_row(editMediaForm.media)}}</div><br>
+                            {{ form_end(editMediaForm) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

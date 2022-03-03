@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<form method="post">
+    <div class="authentification_background">
+        <section class="container">
+            <div class ="d-flex justify-content-center">
+            <div class="form-group" style="padding-top:200px; padding-bottom:200px;">
+                <div class="form-class">
+                    <div class="m-4 m-4">
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="flash-{{ label }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        <p class="pt-3 text-center form-title"><strong>Login</strong></p>
+                        <div style="width:90%">
+                        <label for="inputUsername">Pseudo</label>                        
+                        <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="width-input border-better input-form form-control" input-form autocomplete="username" required autofocus>
+                        </div>
+                        <div style="width:90%">
+                        <label for="inputPassword">Mot de passe</label>
+                        <input type="password" name="password" id="inputPassword" class="width-input border-better input-form form-control" autocomplete="current-password" required>
+                        </div>
+                        <input type="hidden" name="_csrf_token"
+                            value="{{ csrf_token('authenticate') }}"
+                        >
+
+                        <div class="text-center">
+                            <button class="border-better btn btn-primary" type="submit">
+                                Connexion
+                            </button><br>
+                            <a href="{{ url('app_register') }}" class="only_mobile">Inscription</a><br>
+                            <a href="{{ url('password_request') }}">Mot de passe oublié</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </section>
+</form>
+    
+
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+    #}
+</form>
+{% endblock %}
