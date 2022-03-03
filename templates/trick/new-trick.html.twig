@@ -8,6 +8,13 @@
             <div class="form-group">
                 <div class="form-class" style="margin-top:100px; margin-bottom:100px;">
                     <div class="m-4 m-4">
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="flash-{{ label }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                         <p class="pt-3 text-center form-title"><strong>Ajouter un nouveau Trick</strong></p>
                             {{ form_start(newTrickForm) }}
                             <div>Nom du Trick :</div>
@@ -16,10 +23,11 @@
                             <div>{{ form_row(newTrickForm.description)}}</div><br>
                             <div>Sélectionner la catégorie du trick :</div>
                             <div>{{ form_row(newTrickForm.category)}}</div><br>
-                            <div>Sélectionner une illustration principal :</div>
-                            <div>{{ form_row(newTrickForm.mainMedia)}}</div><br>
+                            <div>Sélectionner une illustration principal (jpg, jped ou png) :</div>
+                            <div class="mess">
+                            {{ form_row(newTrickForm.mainMedia)}}</div><br>
                             <h2> Ajouter une illlustration :</h2>
-                            <div>{{ form_row(newTrickForm.upload_file)}}</div><br>
+                            <div class="mess">{{ form_row(newTrickForm.upload_file)}}</div><br>
                             <h2> Ajouter une video :</h2>
                             <div>Titre de la video :</div>
                             <div>{{ form_row(newTrickForm.video_name)}}</div><br>

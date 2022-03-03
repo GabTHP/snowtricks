@@ -10,9 +10,6 @@
             <div class="form-group" style="padding-top:200px; padding-bottom:200px;">
                 <div class="form-class">
                     <div class="m-4 m-4">
-                        {% if error %}
-                            <div class="alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        {% endif %}
                         {% for label, messages in app.flashes %}
                             {% for message in messages %}
                                 <div class="flash-{{ label }}">

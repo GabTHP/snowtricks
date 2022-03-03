@@ -6,7 +6,6 @@ use App\Entity\Category;
 use App\Entity\Trick;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -36,12 +35,12 @@ class FormTrickType extends AbstractType
                 'attr' => array('class' => 'input-form form-control  form-class'),
                 'constraints' => [
                     new File([
-                        'mimeTypes' => [ // We want to let upload only jpg, jpeg or png files
+                        'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
                             'image/jpg',
                         ],
-                        'mimeTypesMessage' => "Veuillez soumettre un fichier de type image (jpg, jpeg ou png)",
+                        'mimeTypesMessage' => "Veuillez soumettre un fichier de type  (jpg, jpeg ou png)",
                     ])
                 ],
             ])
@@ -69,12 +68,12 @@ class FormTrickType extends AbstractType
                 'attr' => array('class' => 'input-form form-control  form-class'),
                 'constraints' => [
                     new File([
-                        'mimeTypes' => [ // We want to let upload only jpg, jpeg or png files
+                        'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
                             'image/jpg',
                         ],
-                        'mimeTypesMessage' => "Veuillez soumettre un fichier de type image (jpg, jpeg ou png)",
+                        'mimeTypesMessage' => "Veuillez soumettre un fichier de type image (jpg, jpeg ou png)"
                     ])
                 ],
             ])
