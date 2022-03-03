@@ -189,6 +189,10 @@ h1 .style {
 	align-items: center;
 	overflow: hidden;
 }
+
+.mess li {
+	color: red;
+}
 .fill img {
 	flex-shrink: 0;
 	min-width: 100%;

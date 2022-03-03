@@ -43,8 +43,8 @@ url(/images/snowboard_header.jpg);">
             </div>
             <div class ="d-flex justify-content-center ">
                 <div class="pt-1 pb-2 pl-2 pr-2 m-3 bg-white border-better" style=" border-radius:10px;">
-                    <a href ="/edit-media/{{media.id}}"><i class="p-1 text-secondary bi bi-pen bg-white" style="border-radius:10px;"></i></a>
-                    <a href="/edit-trick/delete-media/{{ media.id}}"><i class="p-1 text-danger bi bi-trash bg-white" style="border-radius:10px;"></i></a>
+                    <a href ="/edit-trick/{{trick.id}}/edit-media/{{media.id}}"><i class="p-1 text-secondary bi bi-pen bg-white" style="border-radius:10px;"></i></a>
+                    <a href="/edit-trick/{{trick.id}}/delete-media/{{ media.id}}"><i class="p-1 text-danger bi bi-trash bg-white" style="border-radius:10px;"></i></a>
                 </div>
             </div>
         </div><br>
@@ -54,8 +54,8 @@ url(/images/snowboard_header.jpg);">
             <iframe width="auto" height="300" src="{{video.url}}"> </iframe>
             <div class ="d-flex justify-content-center ">
                 <div class="pt-1 pb-2 pl-2 pr-2 m-3 bg-white border-better" style=" border-radius:10px;">
-                    <a href ="/edit-video/{{video.id}}"><i class="p-1 text-secondary bi bi-pen bg-white" style="border-radius:10px;"></i></a>
-                    <a href="/edit-trick/delete-video/{{ video.id}}"><i class="p-1 text-danger bi bi-trash bg-white" style="border-radius:10px;"></i></a>
+                    <a href ="/edit-trick/{{trick.id}}/edit-video/{{video.id}}"><i class="p-1 text-secondary bi bi-pen bg-white" style="border-radius:10px;"></i></a>
+                    <a href="/edit-trick/{{trick.id}}/delete-video/{{ video.id}}"><i class="p-1 text-danger bi bi-trash bg-white" style="border-radius:10px;"></i></a>
                 </div>
             </div>
 
@@ -97,9 +97,9 @@ url(/images/snowboard_header.jpg);">
                             <div>Sélectionner la catégorie du trick :</div>
                             <div>{{ form_row(editTrickForm.category)}}</div><br>
                             <div>Sélectionner une illustration principal :</div>
-                            <div>{{ form_row(editTrickForm.mainMedia)}}</div><br>
+                            <div class="mess">{{ form_row(editTrickForm.mainMedia)}}</div><br>
                             <h2> Ajouter une illlustration :</h2>
-                            <div>{{ form_row(editTrickForm.upload_file)}}</div><br>
+                            <div class="mess">{{ form_row(editTrickForm.upload_file)}}</div><br>
                             <h2> Ajouter une Vidéo :</h2>
                             <p> Nom de la vidéo </p>
                             <div>{{ form_row(editTrickForm.video_name)}}</div><br>

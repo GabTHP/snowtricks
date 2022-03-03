@@ -92,13 +92,6 @@ class TrickController extends AbstractController
                 $original_file_name = pathinfo($file2->getClientOriginalName(), PATHINFO_FILENAME);
                 $trick->setMainMedia($original_file_name);
                 $trick->setMainMediaUrl($file_name);
-                if (null !== $file_name) // for example
-                {
-                    $directory = $file_uploader->getTargetDirectory();
-                    $full_path = $directory . '/' . $file_name;
-                } else {
-                    // Oups, an error occured !!!
-                }
             }
             $video_name = $form_new->get("video_name")->getData();
             $video_url = $form_new->get("video_url")->getData();
@@ -113,6 +106,7 @@ class TrickController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($trick);
             $em->flush();
+            $this->addFlash("notice", "Le trick a été ajouté avec succés !");
 
             return $this->redirectToRoute('home');
         }
@@ -146,12 +140,9 @@ class TrickController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($media);
 
-                if (null !== $file_name) // for example
-                {
+                if (null !== $file_name) {
                     $directory = $file_uploader->getTargetDirectory();
                     $full_path = $directory . '/' . $file_name;
-                } else {
-                    // Oups, an error occured !!!
                 }
             }
             $file2 = $form_edit['mainMedia']->getData();
@@ -160,13 +151,6 @@ class TrickController extends AbstractController
                 $original_file_name = pathinfo($file2->getClientOriginalName(), PATHINFO_FILENAME);
                 $trick->setMainMedia($original_file_name);
                 $trick->setMainMediaUrl($file_name);
-                if (null !== $file_name) // for example
-                {
-                    $directory = $file_uploader->getTargetDirectory();
-                    $full_path = $directory . '/' . $file_name;
-                } else {
-                    // Oups, an error occured !!!
-                }
             }
 
             $video_name = $form_edit->get("video_name")->getData();
@@ -183,7 +167,7 @@ class TrickController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('edit_trick', array('id' => $id));
         }
 
         return $this->render('/trick/edit-trick.html.twig', [
@@ -208,9 +192,9 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/edit-trick/delete-media/{id}", name="delete_media")
+     * @Route("/edit-trick/{trick_id}/delete-media/{id}", name="delete_media")
      */
-    public function removeMedia($id, Media $media)
+    public function removeMedia($trick_id, $id, Media $media)
     {
         $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(array('id' => $id));
         $em = $this->getDoctrine()->getManager();
@@ -219,22 +203,20 @@ class TrickController extends AbstractController
 
 
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('edit_trick', array('id' => $trick_id));
     }
 
     /**
-     * @Route("/edit-trick/delete-video/{id}", name="delete_video")
+     * @Route("/edit-trick/{trick_id}/delete-video/{id}", name="delete_video")
      */
-    public function removeVideo($id, Video $video)
+    public function removeVideo($trick_id, $id, Video $video)
     {
         $video = $this->getDoctrine()->getRepository(Video::class)->findOneBy(array('id' => $id));
         $em = $this->getDoctrine()->getManager();
         $em->remove($video);
         $em->flush();
 
-
-
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('edit_trick', array('id' => $trick_id));
     }
 
     /**
@@ -249,9 +231,7 @@ class TrickController extends AbstractController
         $em->persist($trick);
         $em->flush();
 
-
-
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('edit_trick', array('id' => $id));
     }
 
 
@@ -279,7 +259,7 @@ class TrickController extends AbstractController
             $em->persist($message);
             $em->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('trick_show', array('id' => $id, 'slug' => $slug));
         }
         $trick = $repo->findOneBy(array('slug' => $slug));
         $messages = $repo2->findBy(['trick' => $id], ['createdAt' => 'DESC'], 5, 0);
@@ -314,9 +294,9 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/edit-media/{id}", name="edit_media")
+     * @Route("/edit-trick/{trick_id}/edit-media/{id}", name="edit_media")
      */
-    public function editMedia($id, Media $media, Request $request,  FileUploader $file_uploader)
+    public function editMedia($trick_id, $id, Media $media, Request $request,  FileUploader $file_uploader)
     {
         $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(array('id' => $id));
 
@@ -334,20 +314,12 @@ class TrickController extends AbstractController
                 $media->setUrl($file_name);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($media);
-
-                if (null !== $file_name) // for example
-                {
-                    $directory = $file_uploader->getTargetDirectory();
-                    $full_path = $directory . '/' . $file_name;
-                } else {
-                    // Oups, an error occured !!!
-                }
             }
 
             $em->persist($media);
             $em->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('edit_trick', array('id' => $trick_id));
         }
 
         return $this->render('/trick/edit-media.html.twig', [
@@ -357,9 +329,9 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/edit-video/{id}", name="edit_video")
+     * @Route("/edit-trick/{trick_id}/edit-video/{id}", name="edit_video")
      */
-    public function editVideo($id, Video $video, Request $request)
+    public function editVideo($trick_id, $id, Video $video, Request $request)
     {
         $video = $this->getDoctrine()->getRepository(Video::class)->findOneBy(array('id' => $id));
 
@@ -378,7 +350,7 @@ class TrickController extends AbstractController
             $em->persist($video);
             $em->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('edit_trick', array('id' => $trick_id));
         }
 
         return $this->render('/trick/edit-video.html.twig', [

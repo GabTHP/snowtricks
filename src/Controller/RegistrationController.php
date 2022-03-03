@@ -46,13 +46,6 @@ class RegistrationController extends AbstractController
             $file = $form['upload_file']->getData();
             if ($file) {
                 $file_name = $file_uploader->upload($file);
-                if (null !== $file_name) // for example
-                {
-                    $directory = $file_uploader->getTargetDirectory();
-                    $full_path = $directory . '/' . $file_name;
-                } else {
-                    // Oups, an error occured !!!
-                }
             }
 
             $user->setAvatar($file_name);
