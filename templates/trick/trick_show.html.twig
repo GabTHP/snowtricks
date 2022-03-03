@@ -38,13 +38,13 @@ url(/images/snowboard_header.jpg);">
 <div id='media-video' class='media-video-hide'>
     <div class="d-flex justify-content-center flex-wrap  container-fluid">
         {% for media in trick.medias %}
-        <div class="card m-2">
-            <img width="auto" height="auto" src="{{ media.url }}" alt="Card image cap">
+        <div class="fill">
+            <a href="/images/avatars/{{media.url}}"><img width="auto" height="300" src="/images/avatars/{{media.url}}" alt="{{ media.name }}"></a>
         </div>
         {% endfor %}
         {% for video in trick.videos %}
         <div class="card m-2">
-            <iframe width="auto" height="auto" src="https://www.youtube.com/embed/tgbNymZ7vqY"> </iframe>
+            <iframe width="auto" height="300" src="{{video.url}}"> </iframe>
         </div>
         {% endfor %}
     </div>
@@ -89,7 +89,7 @@ url(/images/snowboard_header.jpg);">
     {% for message in messages %}
         <div class="container d-flex justify-content-left align-items-center flex-wrap pt-2 pb-2 pl-5 pr-5">
             <div class="avatar m-2">
-                <img class="avatar-image" src="{{ message.getUser().avatar }}" />
+                <img class="avatar-image" src="/images/avatars/{{ message.getUser().avatar }}" />
             </div>
             <div class="border w-75 p-2" style="border-radius:10px">
             <p style="margin:0;"><strong>{{ message.getUser().username }}</strong></p>

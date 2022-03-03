@@ -2,7 +2,7 @@
 {% for message in messages %}
 <div class="container d-flex justify-content-left align-items-center flex-wrap pt-2 pb-2 pl-5 pr-5">
         <div class="avatar m-2">
-            <img class="avatar-image" src="{{ message.getUser().avatar }}" />
+            <img class="avatar-image" src="/images/avatars/{{ message.getUser().avatar }}" />
         </div>
         <div class="border w-75 p-2" style="border-radius:10px">
         <p style="margin:0;"><strong>{{ message.getUser().username }}</strong></p>

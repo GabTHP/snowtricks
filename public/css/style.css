@@ -183,6 +183,18 @@ h1 .style {
 	border-radius: 0;
 }
 
+.fill {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+.fill img {
+	flex-shrink: 0;
+	min-width: 100%;
+	min-height: 100%;
+}
+
 /* arrow to top */
 .to-top {
 	color: rgb(39, 39, 39);

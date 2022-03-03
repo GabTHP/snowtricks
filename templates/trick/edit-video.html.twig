@@ -9,11 +9,12 @@
                 <div class="form-class">
                     <div class="m-4 m-4">
                         <p class="pt-3 text-center form-title"><strong>Modifier la video</strong></p>
-                            <img src="/images/avatars/{{video.url}}">
+                            <p> vide actuelle : </p>
+                            <iframe width="auto" height="auto" src="{{video.url}}"> </iframe><br><br>
                             {{ form_start(editVideoForm) }}
-                            <div>Url de vidéo :</div>
+                            <div>Url youtube de la vidéo :</div>
                             <div>{{ form_row(editVideoForm.video_url)}}</div><br>
-                            <div>Url de vidéo :</div>
+                            <div>Nom de la vidéo :</div>
                             <div>{{ form_row(editVideoForm.video_name)}}</div><br>
                             {{ form_end(editVideoForm) }}
                     </div>

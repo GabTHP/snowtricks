@@ -37,8 +37,10 @@ url(/images/snowboard_header.jpg);">
 <div id='media-video' class='media-video-hide'>
     <div class="d-flex justify-content-center flex-wrap  container-fluid">
         {% for media in trick.medias %}
-        <div class="card2 m-2" style"border:0px rgba(0,0,0,.0)">
-            <img width="auto" height="auto" src="{{ media.url }}" alt="{{ media.name }}">
+        <div class="card2 m-2 fill" style"border:0px rgba(0,0,0,.0)">
+            <div class="fill">
+                <a href="/images/avatars/{{media.url}}"><img width="auto" height="300" src="/images/avatars/{{media.url}}" alt="{{ media.name }}"></a>
+            </div>
             <div class ="d-flex justify-content-center ">
                 <div class="pt-1 pb-2 pl-2 pr-2 m-3 bg-white border-better" style=" border-radius:10px;">
                     <a href ="/edit-media/{{media.id}}"><i class="p-1 text-secondary bi bi-pen bg-white" style="border-radius:10px;"></i></a>
@@ -48,8 +50,8 @@ url(/images/snowboard_header.jpg);">
         </div><br>
         {% endfor %}
         {% for video in trick.videos %}
-        <div class="card2 m-2">
-            <iframe width="auto" height="auto" src="{{ video.url }}"> </iframe>
+        <div class="card2 m-2 ">
+            <iframe width="auto" height="300" src="{{video.url}}"> </iframe>
             <div class ="d-flex justify-content-center ">
                 <div class="pt-1 pb-2 pl-2 pr-2 m-3 bg-white border-better" style=" border-radius:10px;">
                     <a href ="/edit-video/{{video.id}}"><i class="p-1 text-secondary bi bi-pen bg-white" style="border-radius:10px;"></i></a>
