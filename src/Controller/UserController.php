@@ -6,6 +6,7 @@ use App\Form\ResetPassType;
 use App\Entity\User;
 use App\Form\ChangePassType;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +43,7 @@ class UserController extends AbstractController
      * @Route("/password-request", name="password_request")
      */
 
-    public function password_request(MailerInterface $mailer, Request $request, UserRepository $users): Response
+    public function password_request(MailerInterface $mailer, Request $request, UserRepository $users, EntityManagerInterface $em): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('home');
@@ -60,9 +61,8 @@ class UserController extends AbstractController
             }
             $token = $this->generateToken();
             $user->setToken($token);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $em->persist($user);
+            $em->flush();
 
             $token = $user->getToken();
             $email = $user->getEmail();
@@ -94,9 +94,8 @@ class UserController extends AbstractController
      * @param $username
      * @return Response
      */
-    public function confirmAccount(UserPasswordHasherInterface $userPasswordHasher, Request $request, $token, $username): Response
+    public function confirmAccount(UserPasswordHasherInterface $userPasswordHasher, Request $request, $token, $username, EntityManagerInterface $em): Response
     {
-        $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->findOneBy(['username' => $username]);
         $tokenExist = $user->getToken();
         if ($token === $tokenExist) {

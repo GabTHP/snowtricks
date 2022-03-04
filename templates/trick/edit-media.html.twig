@@ -10,7 +10,7 @@
                     <div class="m-4 m-4">
                         <p class="pt-3 text-center form-title"><strong>Modifier l'illustration</strong></p>
                             <p>Image actuelle : </p>
-                            <img src="/images/avatars/{{media.url}}"><br><br>
+                            <img src="/images/avatars/{{media.url}}" style="max-height:200px;"><br><br>
                             {{ form_start(editMediaForm) }}
                             <div>Sélectionner une illustration :</div>
                             <div class="mess">{{ form_row(editMediaForm.media)}}</div><br>

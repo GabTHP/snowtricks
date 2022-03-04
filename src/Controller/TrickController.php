@@ -117,10 +117,10 @@ class TrickController extends AbstractController
     /**
      * @Route("/edit-trick/{id}", name="edit_trick")
      */
-    public function editTrick($id, Trick $trick, Request $request,  FileUploader $file_uploader)
+    public function editTrick($id, TrickRepository $repo, Request $request,  FileUploader $file_uploader, EntityManagerInterface $em)
     {
-        $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('id' => $id));
 
+        $trick = $repo->findOneBy(['id' => $id]);
         $form_edit = $this->createForm(FormTrickType::class, $trick);
 
         $form_edit->handleRequest($request);
@@ -135,7 +135,6 @@ class TrickController extends AbstractController
                 $media->setName($original_file_name);
                 $media->setUrl($file_name);
                 $media->setTrick($trick);
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($media);
 
                 if (null !== $file_name) {
@@ -160,7 +159,6 @@ class TrickController extends AbstractController
                 $video->setTrick($trick);
                 $em->persist($video);
             }
-            $em = $this->getDoctrine()->getManager();
             $em->persist($trick);
 
             $em->flush();
@@ -177,10 +175,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/delete-trick/{id}", name="delete_trick")
      */
-    public function removeTrick($id, TrickRepository $repo)
+    public function removeTrick($id, TrickRepository $repo, EntityManagerInterface $em)
     {
         $trick = $repo->find($id);
-        $em = $this->getDoctrine()->getManager();
         $em->remove($trick);
         $em->flush();
         $this->addFlash("notice", "Le trick a été supprimé avec succés !");
@@ -193,10 +190,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/edit-trick/{trick_id}/delete-media/{id}", name="delete_media")
      */
-    public function removeMedia($trick_id, $id, Media $media)
+    public function removeMedia($trick_id, $id, MediaRepository $repo, EntityManagerInterface $em)
     {
-        $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(array('id' => $id));
-        $em = $this->getDoctrine()->getManager();
+        $media = $repo->findOneBy(['id' => $id]);
         $em->remove($media);
         $em->flush();
 
@@ -208,10 +204,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/edit-trick/{trick_id}/delete-video/{id}", name="delete_video")
      */
-    public function removeVideo($trick_id, $id, Video $video)
+    public function removeVideo($trick_id, $id, VideoRepository $repo, EntityManagerInterface $em)
     {
-        $video = $this->getDoctrine()->getRepository(Video::class)->findOneBy(array('id' => $id));
-        $em = $this->getDoctrine()->getManager();
+        $video = $repo->findOneBy(['id' => $id]);
         $em->remove($video);
         $em->flush();
 
@@ -223,12 +218,11 @@ class TrickController extends AbstractController
     /**
      * @Route("/edit-trick/delete-main-media/{id}", name="delete_main_media")
      */
-    public function removeMainMedia($id, Trick $trick)
+    public function removeMainMedia($id, TrickRepository $repo, EntityManagerInterface $em)
     {
-        $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(array('id' => $id));
+        $trick = $repo->findOneBy(['id' => $id]);
         $trick->setMainMedia(null);
         $trick->setMainMediaUrl(null);
-        $em = $this->getDoctrine()->getManager();
         $em->persist($trick);
         $em->flush();
 
@@ -242,7 +236,7 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick/{id}/{slug}", name="trick_show")
      */
-    public function getSingleTrick($id, $slug, TrickRepository $repo, MessageRepository $repo2, Request $request): Response
+    public function getSingleTrick($id, $slug, TrickRepository $repo, MessageRepository $repo2, Request $request, EntityManagerInterface $em): Response
     {
         $trick = $repo->findOneBy(array('slug' => $slug));
 
@@ -255,7 +249,6 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
             $user = $this->getUser();
             $message->setUser($user);
             $message->SetTrick($trick);
@@ -299,9 +292,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/edit-trick/{trick_id}/edit-media/{id}", name="edit_media")
      */
-    public function editMedia($trick_id, $id, Media $media, Request $request,  FileUploader $file_uploader)
+    public function editMedia($trick_id, $id, MediaRepository $repo, Request $request,  FileUploader $file_uploader, EntityManagerInterface $em)
     {
-        $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(array('id' => $id));
+        $media = $repo->findOneBy(['id' => $id]);
 
         $form_edit = $this->createForm(FormMediaType::class);
 
@@ -315,7 +308,6 @@ class TrickController extends AbstractController
                 $original_file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $media->setName($original_file_name);
                 $media->setUrl($file_name);
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($media);
             }
 
@@ -336,10 +328,9 @@ class TrickController extends AbstractController
     /**
      * @Route("/edit-trick/{trick_id}/edit-video/{id}", name="edit_video")
      */
-    public function editVideo($trick_id, $id, Video $video, Request $request)
+    public function editVideo($trick_id, $id, VideoRepository $repo, Request $request, EntityManagerInterface $em)
     {
-        $video = $this->getDoctrine()->getRepository(Video::class)->findOneBy(array('id' => $id));
-
+        $video = $repo->findOneBy(['id' => $id]);
         $form_edit = $this->createForm(FormVideoType::class);
 
         $form_edit->handleRequest($request);
@@ -350,7 +341,6 @@ class TrickController extends AbstractController
             $video_name = $form_edit['video_name']->getData();
             $video->setName($video_name);
             $video->setUrl($video_url);
-            $em = $this->getDoctrine()->getManager();
 
             $em->persist($video);
             $em->flush();
