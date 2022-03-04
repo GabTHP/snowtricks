@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request; // Nous avons besoin d'accéder à la requête pour obtenir le numéro de page
 use App\Service\FileUploader;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TrickController extends AbstractController
 {
@@ -54,7 +55,7 @@ class TrickController extends AbstractController
     /**
      * @Route("/new-trick", name="new_trick")
      */
-    public function newTrick(Request $request,  FileUploader $file_uploader)
+    public function newTrick(Request $request,  FileUploader $file_uploader, EntityManagerInterface $em)
     {
         $trick = new Trick;
         $user = $this->getUser();
@@ -74,7 +75,6 @@ class TrickController extends AbstractController
                 $media->setName($original_file_name);
                 $media->setUrl($file_name);
                 $media->setTrick($trick);
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($media);
 
                 if (null !== $file_name) // for example
@@ -102,8 +102,6 @@ class TrickController extends AbstractController
                 $video->setTrick($trick);
                 $em->persist($video);
             }
-
-            $em = $this->getDoctrine()->getManager();
             $em->persist($trick);
             $em->flush();
             $this->addFlash("notice", "Le trick a été ajouté avec succés !");

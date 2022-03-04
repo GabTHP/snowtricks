@@ -34,14 +34,16 @@ url(/images/snowboard_header.jpg);">
 <div id='media-video' class='media-video-hide'>
     <div class="d-flex justify-content-center flex-wrap  container-fluid">
         {% for media in trick.medias %}
-        <div class="fill">
-            <a href="/images/avatars/{{media.url}}"><img width="auto" height="300" src="/images/avatars/{{media.url}}" alt="{{ media.name }}"></a>
-        </div>
-        {% endfor %}
-        {% for video in trick.videos %}
-        <div class="card m-2">
-            <iframe width="auto" height="300" src="{{video.url}}"> </iframe>
-        </div>
+            <div class="card2 m-2 fill" style"border:0px rgba(0,0,0,.0)">
+                <div class="fill">
+                    <a href="/images/avatars/{{media.url}}"><img width="auto" height="300" src="/images/avatars/{{media.url}}" alt="{{ media.name }}"></a>
+                </div>
+            </div>
+            {% endfor %}
+            {% for video in trick.videos %}
+            <div class="card m-2">
+                <iframe width="auto" height="300" src="{{video.url}}"> </iframe>
+            </div>
         {% endfor %}
     </div>
 </div>
