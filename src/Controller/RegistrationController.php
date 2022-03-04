@@ -88,9 +88,8 @@ class RegistrationController extends AbstractController
      * @param $username
      * @return Response
      */
-    public function confirmAccount($token, $username): Response
+    public function confirmAccount($token, $username, EntityManagerInterface $em): Response
     {
-        $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->findOneBy(['username' => $username]);
         $tokenExist = $user->getToken();
         if ($token === $tokenExist) {

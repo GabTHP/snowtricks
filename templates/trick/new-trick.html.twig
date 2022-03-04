@@ -17,8 +17,10 @@
                     {% endfor %}
                         <p class="pt-3 text-center form-title"><strong>Ajouter un nouveau Trick</strong></p>
                             {{ form_start(newTrickForm) }}
+                            <div class="mess">
                             <div>Nom du Trick :</div>
                             <div>{{ form_row(newTrickForm.name)}}</div><br>
+                            </div>
                             <div>Description :</div>
                             <div>{{ form_row(newTrickForm.description)}}</div><br>
                             <div>Sélectionner la catégorie du trick :</div>
