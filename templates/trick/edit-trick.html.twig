@@ -31,6 +31,15 @@ url(/images/snowboard_header.jpg);">
         <h1 class="style">{{ trick.name }}</h1>
     </div>
 </div>
+<div class="text-center">
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="flash-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+</div>
 <div id="button-load" class="text-center p-3">
     <button onclick="loadMedia()"id="load-media" class="btn btn-primary">See More</button>
 </div>

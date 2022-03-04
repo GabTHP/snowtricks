@@ -166,7 +166,7 @@ class TrickController extends AbstractController
             $em->persist($trick);
 
             $em->flush();
-
+            $this->addFlash("notice", "Le trick a été mis à jour avec succés !");
             return $this->redirectToRoute('edit_trick', array('id' => $id));
         }
 
@@ -185,6 +185,7 @@ class TrickController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($trick);
         $em->flush();
+        $this->addFlash("notice", "Le trick a été supprimé avec succés !");
 
 
 
@@ -201,7 +202,7 @@ class TrickController extends AbstractController
         $em->remove($media);
         $em->flush();
 
-
+        $this->addFlash("notice", "L'image a été supprimée avec succés !");
 
         return $this->redirectToRoute('edit_trick', array('id' => $trick_id));
     }
@@ -215,6 +216,8 @@ class TrickController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($video);
         $em->flush();
+
+        $this->addFlash("notice", "La vidéo a été supprimée avec succés !");
 
         return $this->redirectToRoute('edit_trick', array('id' => $trick_id));
     }
@@ -230,6 +233,8 @@ class TrickController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($trick);
         $em->flush();
+
+        $this->addFlash("notice", "L'image principale du trick a été supprimée avec succés !");
 
         return $this->redirectToRoute('edit_trick', array('id' => $id));
     }
@@ -319,6 +324,8 @@ class TrickController extends AbstractController
             $em->persist($media);
             $em->flush();
 
+            $this->addFlash("notice", "L'image a été mise à jour avec succés !");
+
             return $this->redirectToRoute('edit_trick', array('id' => $trick_id));
         }
 
@@ -349,6 +356,8 @@ class TrickController extends AbstractController
 
             $em->persist($video);
             $em->flush();
+
+            $this->addFlash("notice", "La vidéo a été mise à jour avec succés !");
 
             return $this->redirectToRoute('edit_trick', array('id' => $trick_id));
         }
