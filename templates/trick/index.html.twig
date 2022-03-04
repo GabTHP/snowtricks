@@ -36,16 +36,16 @@
 <section id='tricks'>
     <div  id="trickList" class="d-flex justify-content-center flex-wrap  container-fluid">
     {% for trick in tricks %}
-    <div class="border-better card m-2">
-        {% if trick.mainMedia %}
-        <div class="fill">
-            <img src="/images/avatars/{{ trick.mainMediaUrl }}" alt="{{ trick.mainMedia}}" style="border-radius:10px 10px 0 0; height:220px;">
-        </div>
-        {% else %}
-        <div class="fill">
-            <img class="card-img-top" src="/images/snowboard_header.jpg" alt="Snowboarder background" style="border-radius:10px 10px 0 0; height:220px;">
-        </div>
-        {% endif %}
+<div class="border-better  card m-2">
+    {% if trick.mainMedia %}
+    <div class="fill">
+        <img class="card-img-top" src="/images/avatars/{{ trick.mainMediaUrl }}" alt="{{ trick.mainMedia}}" style="border-radius:10px 10px 0 0; height:220px;">
+    </div>
+    {% else %}
+    <div class="fill">
+        <img class="card-img-top" src="/images/snowboard_header.jpg" alt="Snowboarder background" style="border-radius:10px 10px 0 0; height:220px;">
+    </div>
+    {% endif %}     
             <div class="card-body d-flex">
             <p class="me-auto"><a href="trick/{{ trick.id }}/{{ trick.slug }}">{{trick.name }}</a></p>
             {% if app.user %}
