@@ -17,7 +17,7 @@ Lien vers analyse du projet Symfony Insight : https://insight.symfony.com/projec
 
 1. Télecharcher le repository snowtricks
 
-2. Ajouter unfichier .env à la racine du projet en ajoutant les variables en fonction de votre environnement :
+2. Mettre à jour le fichier .env à la racine du projet en modifiant les variable ci dessous avec les informations de votre environnement :
 
 Configuration du mailer avec le modèle ci-dessous :
 
