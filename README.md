@@ -36,6 +36,13 @@ Configuration de la connexion à la base de données avec le modèle ci-dessous 
    - php bin/console doctrine:database:create
    - php bin/console doctrine:migrations:migrate
 
-5. Utilisez la commande ci-dessous pour générer un jeu de données et bénéficier d'une démo du site Snow Tricks ! -php bin/console doctrine:fixtures:load
+5. Utilisez la commande ci-dessous pour générer un jeu de données et bénéficier d'une démo du site Snow Tricks !
+
+- php bin/console doctrine:fixtures:load
+
+Le lancement des fixtures prévoit un compte utilisateur, les informations de connexions sont :
+
+- pseudo : gabriel
+- mot de passe : azerty
 
 Bonne visite !
