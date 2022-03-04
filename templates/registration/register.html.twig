@@ -13,7 +13,7 @@
             <div class="form-group" style="padding-top:200px; padding-bottom:200px;">
                 <div class="form-class">
                     <div class="m-4 m-4">
-                        <p class="pt-3 text-center form-title">Register</p>
+                        <p class="pt-3 text-center form-title">Créer mon compte</p>
                         {{ form_start(registrationForm) }}
                             {{ form_start(registrationForm) }}
                             <label for="inputUsername">Pseudo</label>
@@ -33,7 +33,7 @@
                             {{ form_row(registrationForm.plainPassword) }}
                             </div>
                             <div class="text-center">
-                            <button type="submit" class="btn btn-primary border-better">Register</button>
+                            <button type="submit" class="btn btn-primary border-better">Confirmer</button>
                             {{ form_end(registrationForm) }}
                             <br>
                             <a href="{{ url('app_login') }}" class="only_mobile">J'ai déjà un compte</a>
