@@ -29,24 +29,26 @@ url(/images/snowboard_header.jpg);">
     </div>
 </div>
 <div id="button-load" class="text-center p-3">
-    <button onclick="loadMedia()"id="load-media" class="btn btn-primary">See More</button>
+    <button onclick="loadMedia()"id="load-media" class="btn btn-primary">Voir plus</button>
 </div>
 <div id='media-video' class='media-video-hide'>
     <div class="d-flex justify-content-center flex-wrap  container-fluid">
         {% for media in trick.medias %}
-        <div class="fill">
-            <a href="/images/avatars/{{media.url}}"><img width="auto" height="300" src="/images/avatars/{{media.url}}" alt="{{ media.name }}"></a>
-        </div>
-        {% endfor %}
-        {% for video in trick.videos %}
-        <div class="card m-2">
-            <iframe width="auto" height="300" src="{{video.url}}"> </iframe>
-        </div>
+            <div class="card2 m-2 fill" style"border:0px rgba(0,0,0,.0)">
+                <div class="fill">
+                    <a href="/images/avatars/{{media.url}}"><img width="auto" height="300" src="/images/avatars/{{media.url}}" alt="{{ media.name }}"></a>
+                </div>
+            </div>
+            {% endfor %}
+            {% for video in trick.videos %}
+            <div class="card m-2">
+                <iframe width="auto" height="300" src="{{video.url}}"> </iframe>
+            </div>
         {% endfor %}
     </div>
 </div>
 <div id="button-hide"class="hidden">
-    <button onclick="hideMedia();"id="hide-media;" class="btn btn-primary">See Less</button>
+    <button onclick="hideMedia();"id="hide-media;" class="btn btn-primary">Voir moins</button>
 </div>
     <div class="container">
         <p> {{ trick.description }} <p>
@@ -101,7 +103,7 @@ url(/images/snowboard_header.jpg);">
 <section>
 {% if messages|length > 5 %}
 <div class="text-center p-3">
-    <button id="loadMoreMessages" class="btn btn-primary">Load More</button>
+    <button id="loadMoreMessages" class="btn btn-primary">Afficher les anciens messages</button>
 </div>
 {% else %}
 {% endif %}
