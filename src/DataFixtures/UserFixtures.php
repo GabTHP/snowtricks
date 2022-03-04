@@ -34,6 +34,7 @@ class UserFixtures extends Fixture
         $user->setRoles($roles);
         $user->setEmail($email);
         $user->setAvatar($avatar);
+        $user->setIsVerified(1);
 
         $manager->persist($user);
         $manager->flush();
