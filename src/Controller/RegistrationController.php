@@ -94,9 +94,10 @@ class RegistrationController extends AbstractController
         $tokenExist = $user->getToken();
         if ($token === $tokenExist) {
             $user->setToken(null);
-            $user->setValid(true);
+            $user->setIsVerified(true);
             $em->persist($user);
             $em->flush();
+            $this->addFlash("notice", "Le compte a été validé avec succés !");
             return $this->redirectToRoute('app_login');
         } else {
             return $this->render('home');

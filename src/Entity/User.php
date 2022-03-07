@@ -70,11 +70,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $token;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $valid;
-
     public function __construct()
     {
         $this->message = new ArrayCollection();
@@ -270,18 +265,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setToken(?string $token): self
     {
         $this->token = $token;
-
-        return $this;
-    }
-
-    public function getValid(): ?bool
-    {
-        return $this->valid;
-    }
-
-    public function setValid(?bool $valid): self
-    {
-        $this->valid = $valid;
 
         return $this;
     }
